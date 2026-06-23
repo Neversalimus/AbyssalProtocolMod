@@ -6,10 +6,11 @@ using Verse;
 namespace AbyssalProtocol
 {
     /// <summary>
-    /// Save-backed ownership record for the single active Abyssal summon pipeline on a map.
-    /// It is a safety layer, not a replacement for concrete world checks: stale records are
-    /// cleared only after the map no longer contains a ritual, portal, manifestation, wave,
-    /// Dominion crisis or live combat-capable Abyssal pawn.
+    /// Save-backed lifecycle records for active Abyssal encounters on a map.
+    ///
+    /// Normal player paths still enforce one encounter at a time. Multiple records exist only
+    /// because the explicitly confirmed Dev rehearsal route can intentionally overlap compatible
+    /// encounters for testing. Concrete world state remains authoritative for stale recovery.
     /// </summary>
     public class MapComponent_ABY_SummonEncounterRuntime : MapComponent
     {
@@ -23,52 +24,115 @@ namespace AbyssalProtocol
             ClearedAsStale
         }
 
+        public sealed class EncounterRecord : IExposable
+        {
+            public EncounterStage Stage;
+            public int Sequence;
+            public string EncounterId;
+            public string RitualId;
+            public string SummonMode;
+            public int OwningCircleId;
+            public int StartedTick;
+            public int ActivatedTick;
+            public int LastMeaningfulProgressTick;
+            public int LastStateChangeTick;
+            public int NoConcreteSignalSinceTick = -1;
+            public string LastReason;
+
+            public bool HasBlockingLifecycle => Stage == EncounterStage.Preparing || Stage == EncounterStage.Active;
+
+            public void ExposeData()
+            {
+                Scribe_Values.Look(ref Stage, "stage", EncounterStage.None);
+                Scribe_Values.Look(ref Sequence, "sequence", 0);
+                Scribe_Values.Look(ref EncounterId, "encounterId");
+                Scribe_Values.Look(ref RitualId, "ritualId");
+                Scribe_Values.Look(ref SummonMode, "summonMode");
+                Scribe_Values.Look(ref OwningCircleId, "owningCircleId", 0);
+                Scribe_Values.Look(ref StartedTick, "startedTick", 0);
+                Scribe_Values.Look(ref ActivatedTick, "activatedTick", 0);
+                Scribe_Values.Look(ref LastMeaningfulProgressTick, "lastMeaningfulProgressTick", 0);
+                Scribe_Values.Look(ref LastStateChangeTick, "lastStateChangeTick", 0);
+                Scribe_Values.Look(ref NoConcreteSignalSinceTick, "noConcreteSignalSinceTick", -1);
+                Scribe_Values.Look(ref LastReason, "lastReason");
+            }
+        }
+
         private const int WatchdogIntervalTicks = 120;
         private const int ActiveSignalGraceTicks = 600;
+        private const int TerminalRecordRetentionTicks = 120000;
 
-        private EncounterStage stage;
+        private List<EncounterRecord> records = new List<EncounterRecord>();
         private int sequence;
-        private string encounterId;
-        private string ritualId;
-        private string summonMode;
-        private int owningCircleId;
-        private int startedTick;
-        private int activatedTick;
-        private int lastMeaningfulProgressTick;
-        private int lastStateChangeTick;
-        private int noConcreteSignalSinceTick = -1;
-        private string lastReason;
         private int nextWatchdogTick;
+
+        // Legacy single-record fields remain read only for old saves and are migrated on load.
+        private EncounterStage legacyStage;
+        private int legacySequence;
+        private string legacyEncounterId;
+        private string legacyRitualId;
+        private string legacySummonMode;
+        private int legacyOwningCircleId;
+        private int legacyStartedTick;
+        private int legacyActivatedTick;
+        private int legacyLastMeaningfulProgressTick;
+        private int legacyLastStateChangeTick;
+        private int legacyNoConcreteSignalSinceTick = -1;
+        private string legacyLastReason;
 
         public MapComponent_ABY_SummonEncounterRuntime(Map map) : base(map)
         {
         }
 
-        public EncounterStage Stage => stage;
-        public bool HasBlockingLifecycle => stage == EncounterStage.Preparing || stage == EncounterStage.Active;
-        public string EncounterId => encounterId;
-        public string RitualId => ritualId;
-        public string SummonMode => summonMode;
-        public int StartedTick => startedTick;
-        public int LastMeaningfulProgressTick => lastMeaningfulProgressTick;
-        public string LastReason => lastReason;
+        public IReadOnlyList<EncounterRecord> Records => records;
+        public bool HasBlockingLifecycle
+        {
+            get
+            {
+                for (int i = 0; i < records.Count; i++)
+                {
+                    if (records[i] != null && records[i].HasBlockingLifecycle)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look(ref stage, "abySummonEncounter_stage", EncounterStage.None);
-            Scribe_Values.Look(ref sequence, "abySummonEncounter_sequence", 0);
-            Scribe_Values.Look(ref encounterId, "abySummonEncounter_id");
-            Scribe_Values.Look(ref ritualId, "abySummonEncounter_ritualId");
-            Scribe_Values.Look(ref summonMode, "abySummonEncounter_summonMode");
-            Scribe_Values.Look(ref owningCircleId, "abySummonEncounter_circleId", 0);
-            Scribe_Values.Look(ref startedTick, "abySummonEncounter_startedTick", 0);
-            Scribe_Values.Look(ref activatedTick, "abySummonEncounter_activatedTick", 0);
-            Scribe_Values.Look(ref lastMeaningfulProgressTick, "abySummonEncounter_lastProgressTick", 0);
-            Scribe_Values.Look(ref lastStateChangeTick, "abySummonEncounter_lastStateTick", 0);
-            Scribe_Values.Look(ref noConcreteSignalSinceTick, "abySummonEncounter_noSignalSinceTick", -1);
-            Scribe_Values.Look(ref lastReason, "abySummonEncounter_lastReason");
+            Scribe_Collections.Look(ref records, "abySummonEncounter_records", LookMode.Deep);
+            Scribe_Values.Look(ref sequence, "abySummonEncounter_sequenceV2", 0);
+            Scribe_Values.Look(ref nextWatchdogTick, "abySummonEncounter_nextWatchdogTickV2", 0);
+
+            // Preserve compatibility with saves written by the previous single-record runtime.
+            Scribe_Values.Look(ref legacyStage, "abySummonEncounter_stage", EncounterStage.None);
+            Scribe_Values.Look(ref legacySequence, "abySummonEncounter_sequence", 0);
+            Scribe_Values.Look(ref legacyEncounterId, "abySummonEncounter_id");
+            Scribe_Values.Look(ref legacyRitualId, "abySummonEncounter_ritualId");
+            Scribe_Values.Look(ref legacySummonMode, "abySummonEncounter_summonMode");
+            Scribe_Values.Look(ref legacyOwningCircleId, "abySummonEncounter_circleId", 0);
+            Scribe_Values.Look(ref legacyStartedTick, "abySummonEncounter_startedTick", 0);
+            Scribe_Values.Look(ref legacyActivatedTick, "abySummonEncounter_activatedTick", 0);
+            Scribe_Values.Look(ref legacyLastMeaningfulProgressTick, "abySummonEncounter_lastProgressTick", 0);
+            Scribe_Values.Look(ref legacyLastStateChangeTick, "abySummonEncounter_lastStateTick", 0);
+            Scribe_Values.Look(ref legacyNoConcreteSignalSinceTick, "abySummonEncounter_noSignalSinceTick", -1);
+            Scribe_Values.Look(ref legacyLastReason, "abySummonEncounter_lastReason");
             Scribe_Values.Look(ref nextWatchdogTick, "abySummonEncounter_nextWatchdogTick", 0);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                if (records == null)
+                {
+                    records = new List<EncounterRecord>();
+                }
+
+                MigrateLegacyRecordIfNeeded();
+                PruneTerminalRecords(Now);
+            }
         }
 
         public void BeginPreparation(Building_AbyssalSummoningCircle circle, CompProperties_UseEffectSummonBoss props)
@@ -79,30 +143,42 @@ namespace AbyssalProtocol
             }
 
             int now = Now;
+            EncounterRecord existing = FindLatestRecordForCircle(circle, true);
+            if (existing != null && existing.HasBlockingLifecycle)
+            {
+                SetTerminal(existing, EncounterStage.Aborted, "A new preparation replaced an unfinished lifecycle on the same summoning circle.");
+            }
+
             sequence++;
-            stage = EncounterStage.Preparing;
-            encounterId = "aby-" + map.uniqueID + "-" + circle.thingIDNumber + "-" + sequence + "-" + now;
-            ritualId = props.ritualId ?? string.Empty;
-            summonMode = props.summonMode ?? "Boss";
-            owningCircleId = circle.thingIDNumber;
-            startedTick = now;
-            activatedTick = 0;
-            lastMeaningfulProgressTick = now;
-            lastStateChangeTick = now;
-            noConcreteSignalSinceTick = -1;
-            lastReason = "Invocation committed; ritual preparation is in progress.";
+            EncounterRecord record = new EncounterRecord
+            {
+                Stage = EncounterStage.Preparing,
+                Sequence = sequence,
+                EncounterId = "aby-" + map.uniqueID + "-" + circle.thingIDNumber + "-" + sequence + "-" + now,
+                RitualId = props.ritualId ?? string.Empty,
+                SummonMode = props.summonMode ?? "Boss",
+                OwningCircleId = circle.thingIDNumber,
+                StartedTick = now,
+                ActivatedTick = 0,
+                LastMeaningfulProgressTick = now,
+                LastStateChangeTick = now,
+                NoConcreteSignalSinceTick = -1,
+                LastReason = "Invocation committed; ritual preparation is in progress."
+            };
+            records.Add(record);
             AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(map);
         }
 
         public void NotifyRitualPhase(Building_AbyssalSummoningCircle circle, string phase)
         {
-            if (!Owns(circle) || stage != EncounterStage.Preparing)
+            EncounterRecord record = FindLatestRecordForCircle(circle, false);
+            if (record == null || record.Stage != EncounterStage.Preparing)
             {
                 return;
             }
 
-            lastMeaningfulProgressTick = Now;
-            lastReason = "Ritual phase: " + (phase ?? "unknown") + ".";
+            record.LastMeaningfulProgressTick = Now;
+            record.LastReason = "Ritual phase: " + (phase ?? "unknown") + ".";
             AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(map);
         }
 
@@ -113,82 +189,111 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!Owns(circle))
+            EncounterRecord record = FindLatestRecordForCircle(circle, false);
+            if (record == null)
             {
-                // Dev/direct paths can begin an external crisis without a regular sigil transaction.
-                BeginExternal(circle, activatedRitualId, activatedSummonMode);
+                record = BeginExternal(circle, activatedRitualId, activatedSummonMode);
             }
 
-            stage = EncounterStage.Active;
-            ritualId = activatedRitualId ?? ritualId ?? string.Empty;
-            summonMode = activatedSummonMode ?? summonMode ?? "Boss";
-            activatedTick = Now;
-            lastMeaningfulProgressTick = activatedTick;
-            lastStateChangeTick = activatedTick;
-            noConcreteSignalSinceTick = -1;
-            lastReason = "Encounter manifestation accepted by the map.";
+            record.Stage = EncounterStage.Active;
+            record.RitualId = activatedRitualId ?? record.RitualId ?? string.Empty;
+            record.SummonMode = activatedSummonMode ?? record.SummonMode ?? "Boss";
+            record.ActivatedTick = Now;
+            record.LastMeaningfulProgressTick = record.ActivatedTick;
+            record.LastStateChangeTick = record.ActivatedTick;
+            record.NoConcreteSignalSinceTick = -1;
+            record.LastReason = "Encounter manifestation accepted by the map.";
             AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(map);
         }
 
-        public void BeginExternal(Building_AbyssalSummoningCircle circle, string externalRitualId, string externalSummonMode)
+        public EncounterRecord BeginExternal(Building_AbyssalSummoningCircle circle, string externalRitualId, string externalSummonMode)
         {
             if (circle == null || map == null)
             {
-                return;
+                return null;
             }
 
             int now = Now;
             sequence++;
-            encounterId = "aby-" + map.uniqueID + "-" + circle.thingIDNumber + "-external-" + sequence + "-" + now;
-            ritualId = externalRitualId ?? string.Empty;
-            summonMode = externalSummonMode ?? "Boss";
-            owningCircleId = circle.thingIDNumber;
-            startedTick = now;
-            activatedTick = now;
-            lastMeaningfulProgressTick = now;
-            lastStateChangeTick = now;
-            noConcreteSignalSinceTick = -1;
-            lastReason = "External Abyssal encounter started.";
+            EncounterRecord record = new EncounterRecord
+            {
+                Stage = EncounterStage.Active,
+                Sequence = sequence,
+                EncounterId = "aby-" + map.uniqueID + "-" + circle.thingIDNumber + "-external-" + sequence + "-" + now,
+                RitualId = externalRitualId ?? string.Empty,
+                SummonMode = externalSummonMode ?? "Boss",
+                OwningCircleId = circle.thingIDNumber,
+                StartedTick = now,
+                ActivatedTick = now,
+                LastMeaningfulProgressTick = now,
+                LastStateChangeTick = now,
+                NoConcreteSignalSinceTick = -1,
+                LastReason = "External Abyssal encounter started."
+            };
+            records.Add(record);
+            return record;
         }
 
         public void NotifyCircleRitualReset(Building_AbyssalSummoningCircle circle)
         {
-            if (!Owns(circle) || stage != EncounterStage.Preparing)
+            EncounterRecord record = FindLatestRecordForCircle(circle, false);
+            if (record == null || record.Stage != EncounterStage.Preparing)
             {
                 return;
             }
 
-            SetTerminal(EncounterStage.Aborted, "Ritual ended before an encounter was activated.");
+            SetTerminal(record, EncounterStage.Aborted, "Ritual ended before an encounter was activated.");
         }
 
         public void AbortPreparation(Building_AbyssalSummoningCircle circle, string reason)
         {
-            if (!Owns(circle) || stage != EncounterStage.Preparing)
+            EncounterRecord record = FindLatestRecordForCircle(circle, false);
+            if (record == null || record.Stage != EncounterStage.Preparing)
             {
                 return;
             }
 
-            SetTerminal(EncounterStage.Aborted, reason.NullOrEmpty() ? "Invocation aborted before activation." : reason);
+            SetTerminal(record, EncounterStage.Aborted, reason.NullOrEmpty() ? "Invocation aborted before activation." : reason);
         }
 
         public void NotifyWorldStateChanged()
         {
-            if (HasBlockingLifecycle)
+            int now = Now;
+            for (int i = 0; i < records.Count; i++)
             {
-                lastMeaningfulProgressTick = Now;
-                noConcreteSignalSinceTick = -1;
+                EncounterRecord record = records[i];
+                if (record != null && record.HasBlockingLifecycle)
+                {
+                    record.LastMeaningfulProgressTick = now;
+                    record.NoConcreteSignalSinceTick = -1;
+                }
             }
         }
 
         public bool TryGetBlocker(out string blocker)
         {
             blocker = null;
-            if (!HasBlockingLifecycle)
+            EncounterRecord latestPreparing = null;
+            EncounterRecord latestActive = null;
+            for (int i = 0; i < records.Count; i++)
             {
-                return false;
+                EncounterRecord record = records[i];
+                if (record == null || !record.HasBlockingLifecycle)
+                {
+                    continue;
+                }
+
+                if (record.Stage == EncounterStage.Preparing)
+                {
+                    latestPreparing = PickLater(latestPreparing, record);
+                }
+                else if (record.Stage == EncounterStage.Active)
+                {
+                    latestActive = PickLater(latestActive, record);
+                }
             }
 
-            if (stage == EncounterStage.Preparing)
+            if (latestPreparing != null)
             {
                 blocker = AbyssalSummoningConsoleUtility.TranslateOrFallback(
                     "ABY_SummonBlocker_RuntimePreparing",
@@ -196,10 +301,15 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            blocker = AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_SummonBlocker_RuntimeActive",
-                "A previous Abyssal encounter is still active on this map.");
-            return true;
+            if (latestActive != null)
+            {
+                blocker = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                    "ABY_SummonBlocker_RuntimeActive",
+                    "A previous Abyssal encounter is still active on this map.");
+                return true;
+            }
+
+            return false;
         }
 
         public void AppendDiagnosticReport(StringBuilder sb)
@@ -209,18 +319,37 @@ namespace AbyssalProtocol
                 return;
             }
 
-            sb.AppendLine("Runtime encounter lifecycle:");
-            sb.AppendLine(" - Stage: " + stage);
-            sb.AppendLine(" - Id: " + (encounterId ?? "none"));
-            sb.AppendLine(" - Ritual: " + (ritualId ?? "none") + " | mode: " + (summonMode ?? "none"));
-            sb.AppendLine(" - Circle id: " + owningCircleId + " | started tick: " + startedTick + " | activated tick: " + activatedTick);
-            sb.AppendLine(" - Last progress tick: " + lastMeaningfulProgressTick + " | reason: " + (lastReason ?? "none"));
+            sb.AppendLine("Runtime encounter lifecycles: " + records.Count);
+            if (records.Count == 0)
+            {
+                sb.AppendLine(" - none");
+                return;
+            }
+
+            for (int i = 0; i < records.Count; i++)
+            {
+                EncounterRecord record = records[i];
+                if (record == null)
+                {
+                    continue;
+                }
+
+                sb.AppendLine(" - [" + i + "] " + record.Stage
+                    + " | id=" + (record.EncounterId ?? "none")
+                    + " | ritual=" + (record.RitualId ?? "none")
+                    + " | mode=" + (record.SummonMode ?? "none")
+                    + " | circle=" + record.OwningCircleId
+                    + " | started=" + record.StartedTick
+                    + " | activated=" + record.ActivatedTick
+                    + " | lastProgress=" + record.LastMeaningfulProgressTick
+                    + " | reason=" + (record.LastReason ?? "none"));
+            }
         }
 
         public override void MapComponentTick()
         {
             base.MapComponentTick();
-            if (!HasBlockingLifecycle || map == null || Find.TickManager == null)
+            if (map == null || Find.TickManager == null || records.Count == 0)
             {
                 return;
             }
@@ -233,44 +362,91 @@ namespace AbyssalProtocol
 
             nextWatchdogTick = now + WatchdogIntervalTicks;
             RunWatchdog(now);
+            PruneTerminalRecords(now);
         }
 
         private void RunWatchdog(int now)
         {
-            if (stage == EncounterStage.Preparing)
+            for (int i = records.Count - 1; i >= 0; i--)
             {
-                Building_AbyssalSummoningCircle owner = FindOwningCircle();
-                if (owner != null && owner.RitualActive)
+                EncounterRecord record = records[i];
+                if (record == null || !record.HasBlockingLifecycle)
                 {
-                    return;
+                    continue;
                 }
 
-                SetTerminal(EncounterStage.Aborted, "Preparation watchdog cleared a ritual record after the owning circle stopped.");
-                return;
-            }
+                if (record.Stage == EncounterStage.Preparing)
+                {
+                    Building_AbyssalSummoningCircle owner = FindOwningCircle(record);
+                    if (owner != null && owner.RitualActive)
+                    {
+                        continue;
+                    }
 
-            if (AbyssalBossSummonUtility.TryGetConcreteActiveAbyssalEncounterBlocker(map, out _))
-            {
-                noConcreteSignalSinceTick = -1;
-                lastMeaningfulProgressTick = now;
-                return;
-            }
+                    SetTerminal(record, EncounterStage.Aborted, "Preparation watchdog cleared a ritual record after the owning circle stopped.");
+                    continue;
+                }
 
-            if (noConcreteSignalSinceTick < 0)
-            {
-                noConcreteSignalSinceTick = now;
-                return;
-            }
+                if (AbyssalBossSummonUtility.TryGetConcreteActiveAbyssalEncounterBlocker(map, out _))
+                {
+                    record.NoConcreteSignalSinceTick = -1;
+                    record.LastMeaningfulProgressTick = now;
+                    continue;
+                }
 
-            if (now - noConcreteSignalSinceTick >= ActiveSignalGraceTicks)
-            {
-                SetTerminal(EncounterStage.ClearedAsStale, "State watchdog verified no active Abyssal encounter objects, portals, waves, Dominion crisis or combat-capable Abyssal pawns.");
+                if (record.NoConcreteSignalSinceTick < 0)
+                {
+                    record.NoConcreteSignalSinceTick = now;
+                    continue;
+                }
+
+                if (now - record.NoConcreteSignalSinceTick >= ActiveSignalGraceTicks)
+                {
+                    SetTerminal(record, EncounterStage.ClearedAsStale, "State watchdog verified no active Abyssal encounter objects, portals, waves, Dominion crisis or combat-capable Abyssal pawns.");
+                }
             }
         }
 
-        private Building_AbyssalSummoningCircle FindOwningCircle()
+        private EncounterRecord FindLatestRecordForCircle(Building_AbyssalSummoningCircle circle, bool includeTerminal)
         {
-            if (owningCircleId <= 0 || map?.listerThings?.AllThings == null)
+            if (circle == null)
+            {
+                return null;
+            }
+
+            EncounterRecord result = null;
+            for (int i = 0; i < records.Count; i++)
+            {
+                EncounterRecord record = records[i];
+                if (record == null || record.OwningCircleId != circle.thingIDNumber || (!includeTerminal && !record.HasBlockingLifecycle))
+                {
+                    continue;
+                }
+
+                result = PickLater(result, record);
+            }
+
+            return result;
+        }
+
+        private static EncounterRecord PickLater(EncounterRecord first, EncounterRecord second)
+        {
+            if (first == null)
+            {
+                return second;
+            }
+
+            if (second == null)
+            {
+                return first;
+            }
+
+            return second.Sequence >= first.Sequence ? second : first;
+        }
+
+        private Building_AbyssalSummoningCircle FindOwningCircle(EncounterRecord record)
+        {
+            if (record == null || record.OwningCircleId <= 0 || map?.listerThings?.AllThings == null)
             {
                 return null;
             }
@@ -279,7 +455,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < things.Count; i++)
             {
                 Building_AbyssalSummoningCircle circle = things[i] as Building_AbyssalSummoningCircle;
-                if (circle != null && !circle.Destroyed && circle.thingIDNumber == owningCircleId)
+                if (circle != null && !circle.Destroyed && circle.thingIDNumber == record.OwningCircleId)
                 {
                     return circle;
                 }
@@ -288,18 +464,78 @@ namespace AbyssalProtocol
             return null;
         }
 
-        private bool Owns(Building_AbyssalSummoningCircle circle)
+        private void SetTerminal(EncounterRecord record, EncounterStage terminalStage, string reason)
         {
-            return circle != null && owningCircleId > 0 && circle.thingIDNumber == owningCircleId;
+            if (record == null)
+            {
+                return;
+            }
+
+            record.Stage = terminalStage;
+            record.LastReason = reason;
+            record.LastStateChangeTick = Now;
+            record.NoConcreteSignalSinceTick = -1;
+            AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(map);
         }
 
-        private void SetTerminal(EncounterStage terminalStage, string reason)
+        private void PruneTerminalRecords(int now)
         {
-            stage = terminalStage;
-            lastReason = reason;
-            lastStateChangeTick = Now;
-            noConcreteSignalSinceTick = -1;
-            AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(map);
+            if (records == null)
+            {
+                records = new List<EncounterRecord>();
+                return;
+            }
+
+            for (int i = records.Count - 1; i >= 0; i--)
+            {
+                EncounterRecord record = records[i];
+                if (record == null)
+                {
+                    records.RemoveAt(i);
+                    continue;
+                }
+
+                if (!record.HasBlockingLifecycle
+                    && record.LastStateChangeTick > 0
+                    && now - record.LastStateChangeTick > TerminalRecordRetentionTicks)
+                {
+                    records.RemoveAt(i);
+                }
+            }
+        }
+
+        private void MigrateLegacyRecordIfNeeded()
+        {
+            if (legacyStage != EncounterStage.Preparing && legacyStage != EncounterStage.Active)
+            {
+                return;
+            }
+
+            for (int i = 0; i < records.Count; i++)
+            {
+                if (records[i] != null && records[i].EncounterId == legacyEncounterId)
+                {
+                    return;
+                }
+            }
+
+            EncounterRecord migrated = new EncounterRecord
+            {
+                Stage = legacyStage,
+                Sequence = Math.Max(legacySequence, sequence + 1),
+                EncounterId = legacyEncounterId,
+                RitualId = legacyRitualId,
+                SummonMode = legacySummonMode,
+                OwningCircleId = legacyOwningCircleId,
+                StartedTick = legacyStartedTick,
+                ActivatedTick = legacyActivatedTick,
+                LastMeaningfulProgressTick = legacyLastMeaningfulProgressTick,
+                LastStateChangeTick = legacyLastStateChangeTick,
+                NoConcreteSignalSinceTick = legacyNoConcreteSignalSinceTick,
+                LastReason = legacyLastReason ?? "Migrated from the previous single-record summon runtime."
+            };
+            records.Add(migrated);
+            sequence = Math.Max(sequence, migrated.Sequence);
         }
 
         private int Now => Find.TickManager != null ? Find.TickManager.TicksGame : 0;

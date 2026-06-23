@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Reflection;
 using RimWorld;
 using Verse;
 
@@ -27,7 +26,6 @@ namespace AbyssalProtocol
         private const string SummoningCircleDefName = "ABY_SummoningCircle";
 
         private static readonly string[] PortalDefNames = { ImpPortalDefName, RupturePortalDefName };
-        private static bool profilesRelaxed;
         private int nextSlowTick;
         private int nextTamingGuardTick;
         private int nextSigilFocusTick;
@@ -59,8 +57,6 @@ namespace AbyssalProtocol
         public override void MapComponentTick()
         {
             base.MapComponentTick();
-            RelaxEarlyCapacitorProfilesOnce();
-
             if (map == null || Find.TickManager == null)
             {
                 return;
@@ -118,48 +114,6 @@ namespace AbyssalProtocol
             if (nextFoggedPortalTick <= 0) nextFoggedPortalTick = tick + 60;
             if (nextHordePressureTick <= 0) nextHordePressureTick = tick + 15;
             if (nextOrphanGateTick <= 0) nextOrphanGateTick = tick + 90;
-        }
-
-        private static void RelaxEarlyCapacitorProfilesOnce()
-        {
-            if (profilesRelaxed)
-            {
-                return;
-            }
-
-            profilesRelaxed = true;
-            try
-            {
-                Type utilityType = GenTypes.GetTypeInAnyAssembly("AbyssalProtocol.AbyssalCircleCapacitorRitualUtility");
-                if (utilityType == null)
-                {
-                    return;
-                }
-
-                DisableProfileMatch(utilityType, "UnstableBreachProfile");
-                DisableProfileMatch(utilityType, "EmberHuntProfile");
-                DisableProfileMatch(utilityType, "ArchonBeastProfile");
-            }
-            catch (Exception ex)
-            {
-                Log.Warning("[Abyssal Protocol] Full progression hotfix could not relax early capacitor profiles: " + ex.Message);
-            }
-        }
-
-        private static void DisableProfileMatch(Type utilityType, string fieldName)
-        {
-            FieldInfo field = utilityType.GetField(fieldName, BindingFlags.Static | BindingFlags.NonPublic);
-            object profile = field != null ? field.GetValue(null) : null;
-            if (profile == null)
-            {
-                return;
-            }
-
-            FieldInfo ritualId = profile.GetType().GetField("RitualId", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (ritualId != null)
-            {
-                ritualId.SetValue(profile, "__aby_no_required_lattice_" + fieldName);
-            }
         }
 
         private void PreventAbyssalTaming()

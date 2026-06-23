@@ -86,8 +86,7 @@
   <ABY_CircleCommand_OpenConsole>Консоль призыва</ABY_CircleCommand_OpenConsole>
   <ABY_CircleCommand_OpenConsoleDesc>Открыть полную консоль ритуала: готовность, сводка угрозы и назначение сигила.</ABY_CircleCommand_OpenConsoleDesc>
   <ABY_CircleCommand_AssignSigil>Начать призыв</ABY_CircleCommand_AssignSigil>
-  <ABY_CircleCommand_JumpToSigil>Найти сигил</ABY_CircleCommand_JumpToSigil>
-  <ABY_CircleInspect_Sigils>Сигилов на карте: {0}</ABY_CircleInspect_Sigils>
+<ABY_CircleInspect_Sigils>Сигилов на карте: {0}</ABY_CircleInspect_Sigils>
   <ABY_CircleInspect_Readiness>Готовность: {0}</ABY_CircleInspect_Readiness>
   <ABY_CircleInspect_Risk>Риск: {0}</ABY_CircleInspect_Risk>
   <ABY_CircleStatus_Power>Питание</ABY_CircleStatus_Power>
@@ -180,4 +179,28 @@
   <ABY_EncounterBlocker_Horde>На этой карте всё ещё активно ординское вторжение.</ABY_EncounterBlocker_Horde>
   <ABY_EncounterBlocker_Pawn>Всё ещё активна враждебная сущность Бездны: {0}.</ABY_EncounterBlocker_Pawn>
   <ABY_EncounterBlocker_Portal>Остался активный портал Бездны: {0}.</ABY_EncounterBlocker_Portal>
+  <ABY_SigilInvocationFail_NoPawn>Нет подходящего колониста для выполнения этого призыва.</ABY_SigilInvocationFail_NoPawn>
+  <ABY_SigilInvocationFail_SigilMissing>Выбранная сигила больше недоступна.</ABY_SigilInvocationFail_SigilMissing>
+  <ABY_SigilInvocationFail_InvalidPayload>У выбранной сигилы нет корректного abyssal-полезного эффекта призыва.</ABY_SigilInvocationFail_InvalidPayload>
+  <ABY_SigilInvocationFail_Preflight>Призыв не прошёл итоговую проверку готовности.</ABY_SigilInvocationFail_Preflight>
+  <ABY_SigilInvocationFail_TargetInvalid>Цель призыва сигилы больше недействительна.</ABY_SigilInvocationFail_TargetInvalid>
+  <ABY_SigilInvocationFail_OperatorRoute>Ни один колонист не может завершить маршрут сигилы к этому кругу.</ABY_SigilInvocationFail_OperatorRoute>
+  <ABY_SigilInvocationFail_NoFreeColonist>Сейчас нет свободного колониста для управления Кругом призыва.</ABY_SigilInvocationFail_NoFreeColonist>
+  <ABY_SigilInvocationFail_NoManipulation>Среди доступных колонистов нет никого с достаточной Manipulation для управления Кругом призыва.</ABY_SigilInvocationFail_NoManipulation>
+  <ABY_SigilInvocationFail_SigilUnreachable>Ни один доступный колонист не может достичь и зарезервировать выбранную сигилу.</ABY_SigilInvocationFail_SigilUnreachable>
+  <ABY_SigilInvocationFail_CircleUnreachable>Ни один доступный колонист не может достичь и зарезервировать interaction cell Круга призыва.</ABY_SigilInvocationFail_CircleUnreachable>
+  <ABY_SigilInvocationFail_NoSharedRoute>Нет одного колониста, который может достичь и выбранной сигилы, и Круга призыва.</ABY_SigilInvocationFail_NoSharedRoute>
+  <ABY_SigilInvocationFail_Reserved>Сигила или Круг призыва сейчас зарезервированы другой работой.</ABY_SigilInvocationFail_Reserved>
+  <ABY_SigilInvocationFail_SigilForbidden>Подготовленная сигила запрещена. Снимите запрет перед началом призыва.</ABY_SigilInvocationFail_SigilForbidden>
+  <ABY_SigilInvocationFail_LostHeldSigil>Оператор ритуала потерял удерживаемую сигилу до активации.</ABY_SigilInvocationFail_LostHeldSigil>
+  <ABY_SigilInvocationFail_PowerInterrupted>Круг призыва потерял питание во время призыва.</ABY_SigilInvocationFail_PowerInterrupted>
+  <ABY_SigilInvocationFail_LeftInteractionCell>Оператор ритуала покинул interaction cell Круга призыва до активации.</ABY_SigilInvocationFail_LeftInteractionCell>
+  <ABY_SigilInvocationFail_Consume>Сигилу не удалось безопасно израсходовать. Призыв отменён.</ABY_SigilInvocationFail_Consume>
+  <ABY_SigilTransaction_Refunded>Призыв сорвался до активации столкновения. Возвращено: {0}.</ABY_SigilTransaction_Refunded>
+  <ABY_SigilTransaction_RefundDeferred>Предыдущий призыв всё ещё должен вернуть израсходованную сигилу. Освободите место рядом с Кругом призыва и попробуйте снова.</ABY_SigilTransaction_RefundDeferred>
+  <ABY_CircleAbortPendingInvocation>Прервать подготовленный призыв</ABY_CircleAbortPendingInvocation>
+  <ABY_CircleAbortPendingInvocationDesc>Прервать ритуал до проявления столкновения. Израсходованная сигила будет возвращена.</ABY_CircleAbortPendingInvocationDesc>
+  <ABY_CircleAbortPendingInvocationConfirm>Прервать этот призыв до проявления столкновения? Ритуал схлопнется, а израсходованная сигила будет возвращена.</ABY_CircleAbortPendingInvocationConfirm>
+  <ABY_CircleAbortUnavailable>Этот ритуал больше нельзя безопасно прервать, потому что столкновение уже проявилось.</ABY_CircleAbortUnavailable>
+  <ABY_CircleAbortCompleted>Подготовленный призыв прерван. Круг сброшен.</ABY_CircleAbortCompleted>
 </LanguageData>

@@ -97,9 +97,7 @@ then whatever stood beyond it has not even begun to speak.</ABY_ReactorSaintKill
   <ABY_CircleCommand_OpenConsole>Open summoning console</ABY_CircleCommand_OpenConsole>
   <ABY_CircleCommand_OpenConsoleDesc>Open the full command console for ritual readiness, threat preview, and sigil assignment.</ABY_CircleCommand_OpenConsoleDesc>
   <ABY_CircleCommand_AssignSigil>Begin invocation</ABY_CircleCommand_AssignSigil>
-  <ABY_CircleCommand_JumpToSigil>Track sigil</ABY_CircleCommand_JumpToSigil>
-
-  <ABY_CircleInspect_Sigils>Sigils on map: {0}</ABY_CircleInspect_Sigils>
+<ABY_CircleInspect_Sigils>Sigils on map: {0}</ABY_CircleInspect_Sigils>
   <ABY_CircleInspect_Readiness>Readiness: {0}</ABY_CircleInspect_Readiness>
   <ABY_CircleInspect_Risk>Risk: {0}</ABY_CircleInspect_Risk>
 
@@ -205,4 +203,28 @@ then whatever stood beyond it has not even begun to speak.</ABY_ReactorSaintKill
   <ABY_EncounterBlocker_Horde>A horde breach is still active on this map.</ABY_EncounterBlocker_Horde>
   <ABY_EncounterBlocker_Pawn>Hostile abyssal entity still active: {0}.</ABY_EncounterBlocker_Pawn>
   <ABY_EncounterBlocker_Portal>Active abyssal portal remains: {0}.</ABY_EncounterBlocker_Portal>
+  <ABY_SigilInvocationFail_NoPawn>No valid colonist is available to perform this invocation.</ABY_SigilInvocationFail_NoPawn>
+  <ABY_SigilInvocationFail_SigilMissing>The selected sigil is no longer available.</ABY_SigilInvocationFail_SigilMissing>
+  <ABY_SigilInvocationFail_InvalidPayload>The selected sigil has no valid Abyssal invocation payload.</ABY_SigilInvocationFail_InvalidPayload>
+  <ABY_SigilInvocationFail_Preflight>The invocation failed its final readiness check.</ABY_SigilInvocationFail_Preflight>
+  <ABY_SigilInvocationFail_TargetInvalid>The sigil invocation target is no longer valid.</ABY_SigilInvocationFail_TargetInvalid>
+  <ABY_SigilInvocationFail_OperatorRoute>No colonist can complete the sigil route to this circle.</ABY_SigilInvocationFail_OperatorRoute>
+  <ABY_SigilInvocationFail_NoFreeColonist>No free colonist is currently available to operate the summoning circle.</ABY_SigilInvocationFail_NoFreeColonist>
+  <ABY_SigilInvocationFail_NoManipulation>No available colonist has sufficient Manipulation to operate the summoning circle.</ABY_SigilInvocationFail_NoManipulation>
+  <ABY_SigilInvocationFail_SigilUnreachable>No available colonist can reach and reserve the selected sigil.</ABY_SigilInvocationFail_SigilUnreachable>
+  <ABY_SigilInvocationFail_CircleUnreachable>No available colonist can reach and reserve the Summoning Circle interaction cell.</ABY_SigilInvocationFail_CircleUnreachable>
+  <ABY_SigilInvocationFail_NoSharedRoute>No single colonist can reach both the selected sigil and the Summoning Circle.</ABY_SigilInvocationFail_NoSharedRoute>
+  <ABY_SigilInvocationFail_Reserved>The sigil or Summoning Circle is currently reserved by another job.</ABY_SigilInvocationFail_Reserved>
+  <ABY_SigilInvocationFail_SigilForbidden>The prepared sigil is forbidden. Unforbid it before beginning the invocation.</ABY_SigilInvocationFail_SigilForbidden>
+  <ABY_SigilInvocationFail_LostHeldSigil>The ritual operator lost the held sigil before activation.</ABY_SigilInvocationFail_LostHeldSigil>
+  <ABY_SigilInvocationFail_PowerInterrupted>The Summoning Circle lost power during invocation.</ABY_SigilInvocationFail_PowerInterrupted>
+  <ABY_SigilInvocationFail_LeftInteractionCell>The ritual operator left the Summoning Circle interaction cell before activation.</ABY_SigilInvocationFail_LeftInteractionCell>
+  <ABY_SigilInvocationFail_Consume>The sigil could not be consumed safely. The invocation was cancelled.</ABY_SigilInvocationFail_Consume>
+  <ABY_SigilTransaction_Refunded>Invocation failed before the encounter activated. Restored {0}.</ABY_SigilTransaction_Refunded>
+  <ABY_SigilTransaction_RefundDeferred>A previous invocation still needs to restore its consumed sigil. Make space near the Summoning Circle and try again.</ABY_SigilTransaction_RefundDeferred>
+  <ABY_CircleAbortPendingInvocation>Abort pending invocation</ABY_CircleAbortPendingInvocation>
+  <ABY_CircleAbortPendingInvocationDesc>Abort the ritual before the encounter manifests. A consumed sigil will be restored.</ABY_CircleAbortPendingInvocationDesc>
+  <ABY_CircleAbortPendingInvocationConfirm>Abort this invocation before the encounter manifests? The ritual will collapse and its consumed sigil will be restored.</ABY_CircleAbortPendingInvocationConfirm>
+  <ABY_CircleAbortUnavailable>This ritual can no longer be safely aborted because its encounter has already manifested.</ABY_CircleAbortUnavailable>
+  <ABY_CircleAbortCompleted>Pending invocation aborted. The circle has been reset.</ABY_CircleAbortCompleted>
 </LanguageData>

@@ -183,9 +183,16 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (Sigil != null && !Sigil.Destroyed)
+            Thing resolvedSigil = Sigil;
+            if (resolvedSigil != null && !resolvedSigil.Destroyed)
             {
-                Add("sigil", "Sigil", "Selected sigil is present.", true, requireSpecificSigil);
+                bool present = resolvedSigil.Spawned || ABY_SigilUseValidator.IsCarryingSigil(Operator, resolvedSigil);
+                bool forbidden = resolvedSigil.Spawned && resolvedSigil.IsForbidden(Faction.OfPlayer);
+                Add("sigil", "Sigil", !present
+                    ? "The selected sigil is no longer accessible."
+                    : forbidden
+                        ? "ABY_SigilInvocationFail_SigilForbidden".Translate()
+                        : "Selected sigil is present.", present && !forbidden, requireSpecificSigil);
             }
             else
             {
@@ -199,7 +206,9 @@ namespace AbyssalProtocol
 
             if (!requireOperatorReachability)
             {
-                Add("operator", "Operator", Operator != null ? "Operator check deferred to commit." : "Operator check deferred until an invocation pawn is selected.", true, false);
+                Add("operator", "Operator", Operator != null
+                    ? "Operator route check deferred to job commit."
+                    : "Operator check deferred until an invocation pawn is selected.", true, false);
                 return;
             }
 
@@ -209,8 +218,21 @@ namespace AbyssalProtocol
                 return;
             }
 
-            bool canReach = Operator.CanReserveAndReach(Circle, PathEndMode.InteractionCell, Danger.Deadly);
-            Add("operator", "Operator", canReach ? "Operator can reach and reserve the circle." : "The selected operator cannot reach or reserve the circle.", canReach, true);
+            if (resolvedSigil == null || resolvedSigil.Destroyed)
+            {
+                Add("operator", "Operator", "A specific sigil is required before the operator route can be verified.", false, true);
+                return;
+            }
+
+            ABY_SigilUseValidator.OperatorRouteReport route = ABY_SigilUseValidator.EvaluateOperatorRoute(
+                Circle,
+                resolvedSigil,
+                Operator,
+                true);
+            bool canRoute = route != null && route.HasEligibleOperator;
+            Add("operator", "Operator", canRoute
+                ? "Operator can reserve and reach the selected sigil and the circle interaction cell."
+                : (route?.FailureReason ?? "The selected operator cannot complete the sigil route."), canRoute, true);
         }
 
         private string GetExpectedSigilDefName()

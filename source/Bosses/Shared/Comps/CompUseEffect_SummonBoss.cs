@@ -32,7 +32,17 @@ namespace AbyssalProtocol
                 return;
             }
 
-            ConsumeOneUse();
+            ThingDef consumedSigilDef = parent?.def;
+            if (!ConsumeOneUse())
+            {
+                context.Circle.TryAbortPendingInvocation(out _);
+                Messages.Message("ABY_SigilInvocationFail_Consume".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            // The circle owns the transaction.  The sigil becomes permanent only when the
+            // encounter accepts a concrete world-side activation; late failures/aborts refund it.
+            context.Circle.RegisterConsumedSigilTransaction(consumedSigilDef);
 
             Messages.Message(
                 "ABY_SigilActivationStarted".Translate(),
@@ -62,22 +72,27 @@ namespace AbyssalProtocol
             return circle;
         }
 
-        private void ConsumeOneUse()
+        private bool ConsumeOneUse()
         {
-            if (parent == null || parent.Destroyed)
+            if (parent == null || parent.Destroyed || parent.stackCount <= 0)
             {
-                return;
+                return false;
             }
 
             if (parent.stackCount > 1)
             {
                 Thing one = parent.SplitOff(1);
-                one?.Destroy();
+                if (one == null)
+                {
+                    return false;
+                }
+
+                one.Destroy();
+                return true;
             }
-            else
-            {
-                parent.Destroy();
-            }
+
+            parent.Destroy();
+            return true;
         }
 
         private void TryEjectFailedSigilFromCircle(Pawn usedBy, Building_AbyssalSummoningCircle circle)

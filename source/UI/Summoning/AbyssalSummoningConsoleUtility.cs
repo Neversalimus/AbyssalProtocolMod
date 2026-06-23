@@ -968,6 +968,10 @@ namespace AbyssalProtocol
             ABY_SummonPreflightReport preflight = ABY_SummonPreflightReport.Create(circle, props);
             preflight.AppendDiagnosticReport(sb);
 
+            Thing diagnosticSigil = FindBestSigil(circle, ritual, out string diagnosticSigilReason);
+            sb.AppendLine("Console sigil selection: " + (diagnosticSigil != null ? diagnosticSigil.LabelCap.ToString() : (diagnosticSigilReason ?? "none")));
+            ABY_SigilUseValidator.EvaluateOperatorRoute(circle, diagnosticSigil, null, true).AppendDiagnosticReport(sb);
+
             if (circle?.Map != null)
             {
                 MapComponent_ABY_SummonEncounterRuntime runtime = circle.Map.GetComponent<MapComponent_ABY_SummonEncounterRuntime>();
@@ -1331,23 +1335,13 @@ namespace AbyssalProtocol
 
         public static int CountAvailableOperators(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
-            if (circle == null || circle.Map == null)
+            Thing sigil = FindBestSigil(circle, ritual, out _);
+            if (sigil == null)
             {
                 return 0;
             }
 
-            int count = 0;
-            List<Pawn> pawns = circle.Map.mapPawns.FreeColonistsSpawned;
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn pawn = pawns[i];
-                if (CanUseCircle(pawn, circle, ritual, false))
-                {
-                    count++;
-                }
-            }
-
-            return count;
+            return ABY_SigilUseValidator.EvaluateOperatorRoute(circle, sigil, null, true).EligibleCandidates;
         }
 
         public static bool TryAssignInvocation(Building_AbyssalSummoningCircle circle, RitualDefinition ritual, out string failReason)
@@ -1379,6 +1373,14 @@ namespace AbyssalProtocol
             Pawn pawn = FindBestOperator(circle, ritual, sigil, out failReason);
             if (pawn == null)
             {
+                return false;
+            }
+
+            CompProperties_UseEffectSummonBoss summonProps = sigil.TryGetComp<CompUseEffect_SummonBoss>()?.Props;
+            ABY_SummonPreflightReport preflight = ABY_SummonPreflightReport.Create(circle, summonProps, pawn, sigil, true, true);
+            if (!preflight.CanStart)
+            {
+                failReason = preflight.PrimaryBlocker ?? "ABY_SigilInvocationFail_Preflight".Translate();
                 return false;
             }
 
@@ -1602,6 +1604,7 @@ namespace AbyssalProtocol
             }
 
             Thing best = null;
+            bool foundForbidden = false;
             float bestScore = float.MaxValue;
             List<Thing> things = circle.Map.listerThings.ThingsOfDef(sigilDef);
             for (int i = 0; i < things.Count; i++)
@@ -1609,6 +1612,12 @@ namespace AbyssalProtocol
                 Thing thing = things[i];
                 if (thing == null || thing.Destroyed || !thing.Spawned || thing.MapHeld != circle.Map)
                 {
+                    continue;
+                }
+
+                if (thing.IsForbidden(Faction.OfPlayer))
+                {
+                    foundForbidden = true;
                     continue;
                 }
 
@@ -1622,8 +1631,15 @@ namespace AbyssalProtocol
 
             if (best == null)
             {
-                string sigilLabel = sigilDef.label ?? ritual?.SigilThingDefName ?? TranslateOrFallback("ABY_CircleConsoleFail_NoSigilFallback", "prepared sigil");
-                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoSpecificSigil", "No prepared {0} was found on the current map.", sigilLabel);
+                if (foundForbidden)
+                {
+                    failReason = "ABY_SigilInvocationFail_SigilForbidden".Translate();
+                }
+                else
+                {
+                    string sigilLabel = sigilDef.label ?? ritual?.SigilThingDefName ?? TranslateOrFallback("ABY_CircleConsoleFail_NoSigilFallback", "prepared sigil");
+                    failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoSpecificSigil", "No prepared {0} was found on the current map.", sigilLabel);
+                }
             }
 
             return best;
@@ -1682,52 +1698,9 @@ namespace AbyssalProtocol
 
         public static Pawn FindBestOperator(Building_AbyssalSummoningCircle circle, RitualDefinition ritual, Thing sigil, out string failReason)
         {
-            failReason = null;
-            if (circle?.Map == null || sigil == null)
-            {
-                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoOperator", "No suitable colonist is currently available to carry a sigil to the circle.");
-                return null;
-            }
-
-            Pawn best = null;
-            float bestScore = float.MaxValue;
-            List<Pawn> pawns = circle.Map.mapPawns.FreeColonistsSpawned;
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn pawn = pawns[i];
-                if (!CanUseCircle(pawn, circle, ritual, true))
-                {
-                    continue;
-                }
-
-                if (!pawn.CanReserveAndReach(sigil, PathEndMode.Touch, Danger.Deadly))
-                {
-                    continue;
-                }
-
-                if (!pawn.CanReserveAndReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
-                {
-                    continue;
-                }
-
-                float score = pawn.PositionHeld.DistanceToSquared(sigil.PositionHeld);
-                if (pawn.Drafted)
-                {
-                    score += 4000f;
-                }
-                if (score < bestScore)
-                {
-                    best = pawn;
-                    bestScore = score;
-                }
-            }
-
-            if (best == null)
-            {
-                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoOperator", "No suitable colonist is currently available to carry a sigil to the circle.");
-            }
-
-            return best;
+            ABY_SigilUseValidator.OperatorRouteReport report = ABY_SigilUseValidator.EvaluateOperatorRoute(circle, sigil, null, true);
+            failReason = report.FailureReason;
+            return report.BestOperator;
         }
 
         public static Pawn FindBestModuleOperator(Building_AbyssalSummoningCircle circle, Thing moduleThing, out string failReason)

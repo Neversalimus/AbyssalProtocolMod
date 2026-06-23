@@ -279,3 +279,26 @@ Placement rules:
 - The player diagnostic export belongs in existing Summoning UI helpers/dossier, while automated non-mutating checks belong under `source/Diagnostics/`.
 
 Because these files are gameplay/runtime C#, any patch touching this layer must include the full changed sources under lowercase `source/` and a verified `Assemblies/AbyssalProtocol.dll` only after a successful compatible build.
+
+## 2026-06-23 — Summon transaction and recovery ownership
+
+The normal invocation safety layer is split deliberately:
+
+```text
+source/Summoning/ABY_SigilInvocationTransaction.cs
+source/Summoning/ABY_SigilUseValidator.cs
+source/Summoning/ABY_SummonPreflightReport.cs
+source/Summoning/Jobs/JobDriver_CarrySigilToAbyssalCircle.cs
+source/Summoning/MapComponents/MapComponent_ABY_SummonEncounterRuntime.cs
+source/Bosses/Shared/Comps/CompUseEffect_SummonBoss.cs
+source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
+source/UI/Summoning/AbyssalSummoningConsoleUtility.cs
+source/UI/Summoning/Window_AbyssalSummoningConsole.cs
+source/World/Buildings/Summoning/Building_ABY_SigilVault.cs
+```
+
+- Transaction ownership belongs to the Circle, because only the Circle knows whether real encounter activation happened.
+- Job/Vault/Console/manual-use validation must use `ABY_SigilUseValidator` plus `ABY_SummonPreflightReport` instead of duplicating route, reservation, or manipulation checks.
+- Multi-record encounter lifecycle state belongs only in `MapComponent_ABY_SummonEncounterRuntime`.
+- Capacitor requirement exemptions belong in `AbyssalCircleCapacitorRitualUtility`, never in reflection-based compatibility mutation.
+

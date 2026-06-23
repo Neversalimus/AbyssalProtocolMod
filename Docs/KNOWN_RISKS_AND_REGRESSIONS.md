@@ -998,3 +998,10 @@ In-game checks:
 - Clear a horde after all portals/gate/pawns are gone; confirm the horde watchdog and runtime lifecycle remove the blocker without a time-based player exploit.
 - Open the ritual dossier during an active encounter, copy the report repeatedly, and confirm no sigil/capacitor/arrival state changes.
 - Run `DEV: threat rehearsal` → `Run preflight reliability pass` and confirm every active ritual reports `PASS` coherence, whether its current gameplay gates are actually ready or intentionally blocked.
+
+| Sigil consumed before a real encounter manifests | P1 | normal summon lifecycle | expensive sigil disappears after late portal/manifestation/boss failure, player abort, power interruption, or Circle destruction | Keep `ABY_SigilInvocationTransaction` save-backed. Commit only from `MarkEncounterActivated`; pre-activation reset must refund exactly one sigil and block new invocation until a deferred refund can be placed. |
+| Held-sigil warmup ends without a clear reason | P2 | sigil job / console | pawn drops or loses sigil, loses power, leaves interaction cell, or cannot reserve route; player sees a silent cancellation | Route job-time validation through `ABY_SigilUseValidator`, report one precise localized failure, end priming visuals, and safely release the held sigil. |
+| Duplicate Keyed localization entries | P1 | EN/RU Keyed XML | load-order-dependent text or lost translations | Run duplicate-key validation across each language Keyed folder. Keep `ABY_CircleCommand_JumpToSigil` canonical in SummoningConsoleRedesign strings. |
+| Dev concurrent encounter overwrites lifecycle diagnostics | P3 | summon runtime / Dev rehearsal | second Dev encounter hides first lifecycle state | Store a list of encounter records; normal player route remains one-at-a-time. |
+| Reflection mutation of capacitor profile state | P2 | progression compatibility | private-name refactor silently changes early ritual requirements | Keep early exemptions as explicit `NoCapacitorRequirementRitualIds` policy in the capacitor utility; no reflection mutation from map components. |
+

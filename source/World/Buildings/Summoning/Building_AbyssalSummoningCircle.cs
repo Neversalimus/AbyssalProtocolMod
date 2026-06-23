@@ -135,9 +135,15 @@ namespace AbyssalProtocol
         private bool pendingCapacitorForcedStart;
         private bool pendingCapacitorEmergencyDumpUsed;
         private float pendingCapacitorBacklashSeverity;
+        private ABY_SigilInvocationTransaction pendingSigilTransaction;
+        private bool pendingEncounterActivationCommitted;
         private List<AbyssalCircleModuleSlot> moduleSlots = new List<AbyssalCircleModuleSlot>();
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
+        public bool HasAbortablePendingInvocation => RitualActive
+            && !pendingEncounterActivationCommitted
+            && ritualPhase != RitualPhase.Idle
+            && ritualPhase != RitualPhase.Cooldown;
         public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
         public IntVec3 RitualFocusCell => GenAdj.OccupiedRect(Position, Rotation, def.Size).CenterCell;
         public bool ReducedConsoleEffects => reducedConsoleEffects;
@@ -235,6 +241,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingCapacitorForcedStart, "pendingCapacitorForcedStart", false);
             Scribe_Values.Look(ref pendingCapacitorEmergencyDumpUsed, "pendingCapacitorEmergencyDumpUsed", false);
             Scribe_Values.Look(ref pendingCapacitorBacklashSeverity, "pendingCapacitorBacklashSeverity", 0f);
+            Scribe_Deep.Look(ref pendingSigilTransaction, "pendingSigilTransaction");
+            Scribe_Values.Look(ref pendingEncounterActivationCommitted, "pendingEncounterActivationCommitted", false);
             Scribe_Collections.Look(ref moduleSlots, "moduleSlots", LookMode.Deep);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -278,6 +286,31 @@ namespace AbyssalProtocol
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 }
             };
+
+            if (HasAbortablePendingInvocation)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "ABY_CircleAbortPendingInvocation".Translate(),
+                    defaultDesc = "ABY_CircleAbortPendingInvocationDesc".Translate(),
+                    action = delegate
+                    {
+                        Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                            "ABY_CircleAbortPendingInvocationConfirm".Translate(),
+                            delegate
+                            {
+                                if (TryAbortPendingInvocation(out string abortReason))
+                                {
+                                    Messages.Message("ABY_CircleAbortCompleted".Translate(), MessageTypeDefOf.NeutralEvent, false);
+                                }
+                                else if (!abortReason.NullOrEmpty())
+                                {
+                                    Messages.Message(abortReason, MessageTypeDefOf.RejectInput, false);
+                                }
+                            }));
+                    }
+                };
+            }
 
             if (Prefs.DevMode && Map != null)
             {
@@ -427,6 +460,11 @@ namespace AbyssalProtocol
             TickInstabilityState();
             TickSigilPrimingVisual();
 
+            if (!RitualActive && pendingSigilTransaction != null && pendingSigilTransaction.NeedsRefund)
+            {
+                TryRefundPendingSigilTransaction("Deferred refund recovery after an interrupted invocation.", false);
+            }
+
             if (!RitualActive || Map == null)
             {
                 return;
@@ -485,6 +523,22 @@ namespace AbyssalProtocol
             out string failReason)
         {
             failReason = null;
+
+            if (pendingSigilTransaction != null)
+            {
+                if (pendingSigilTransaction.NeedsRefund)
+                {
+                    if (!TryRefundPendingSigilTransaction("A previous invocation still needs its sigil refund.", false))
+                    {
+                        failReason = "ABY_SigilTransaction_RefundDeferred".Translate();
+                        return false;
+                    }
+                }
+                else
+                {
+                    pendingSigilTransaction = null;
+                }
+            }
 
             if (summonProps == null)
             {
@@ -672,6 +726,7 @@ namespace AbyssalProtocol
             }
 
             ClearSigilPrimingVisual();
+            pendingEncounterActivationCommitted = false;
             Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.BeginPreparation(this, summonProps);
             StartPhase(RitualPhase.Charging, GetPhaseDurationForPendingRitual(RitualPhase.Charging));
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
@@ -1708,7 +1763,12 @@ namespace AbyssalProtocol
 
                 case RitualPhase.Breach:
                     CompleteSummon();
-                    StartPhase(RitualPhase.Cooldown, GetPhaseDurationForPendingRitual(RitualPhase.Cooldown));
+                    // A late spawn/manifestation failure resets the ritual and refunds the pending sigil.
+                    // Do not resurrect the state as Cooldown after that reset.
+                    if (ritualPhase == RitualPhase.Breach && pendingEncounterActivationCommitted)
+                    {
+                        StartPhase(RitualPhase.Cooldown, GetPhaseDurationForPendingRitual(RitualPhase.Cooldown));
+                    }
                     break;
 
                 case RitualPhase.Cooldown:
@@ -2919,20 +2979,73 @@ namespace AbyssalProtocol
             Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.NotifyRitualPhase(this, phase.ToString());
         }
 
+        public void RegisterConsumedSigilTransaction(ThingDef sigilDef)
+        {
+            if (sigilDef == null)
+            {
+                return;
+            }
+
+            if (pendingEncounterActivationCommitted)
+            {
+                Log.Warning("[Abyssal Protocol] Ignored a sigil transaction registration after encounter activation for " + LabelCap + ".");
+                return;
+            }
+
+            if (pendingSigilTransaction == null)
+            {
+                pendingSigilTransaction = new ABY_SigilInvocationTransaction();
+            }
+
+            pendingSigilTransaction.Register(sigilDef, Find.TickManager != null ? Find.TickManager.TicksGame : 0);
+        }
+
+        public bool TryAbortPendingInvocation(out string failReason)
+        {
+            failReason = null;
+            if (!HasAbortablePendingInvocation)
+            {
+                failReason = "ABY_CircleAbortUnavailable".Translate();
+                return false;
+            }
+
+            ResetRitual("Player aborted the invocation before the encounter manifested.");
+            return true;
+        }
+
         private void MarkEncounterActivated()
         {
+            pendingEncounterActivationCommitted = true;
+            pendingSigilTransaction?.Commit("Encounter manifestation accepted by the map.");
             Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.Activate(this, pendingRitualId, pendingSummonMode);
             AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(Map);
         }
 
-        private void ResetRitual()
+        private void ResetRitual(string abortReason = null)
         {
-            Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.NotifyCircleRitualReset(this);
+            bool preActivationAbort = !pendingEncounterActivationCommitted;
+            if (preActivationAbort)
+            {
+                Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.AbortPreparation(
+                    this,
+                    abortReason ?? "Ritual ended before a concrete encounter activation.");
+                if (pendingSigilTransaction != null)
+                {
+                    pendingSigilTransaction.SetReason(abortReason ?? "Ritual ended before a concrete encounter activation.");
+                    TryRefundPendingSigilTransaction(abortReason, true);
+                }
+            }
+            else
+            {
+                Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.NotifyCircleRitualReset(this);
+            }
+
             ResolveCapacitorAftermath();
             BeginCapacitorRecovery();
             ritualPhase = RitualPhase.Idle;
             phaseTicksRemaining = 0;
             phaseDuration = 0;
+            ClearSigilPrimingVisual();
             pendingPawnKindDef = null;
             pendingBossLabel = null;
             pendingRitualId = null;
@@ -2963,6 +3076,54 @@ namespace AbyssalProtocol
             pendingCapacitorForcedStart = false;
             pendingCapacitorEmergencyDumpUsed = false;
             pendingCapacitorBacklashSeverity = 0f;
+            pendingEncounterActivationCommitted = false;
+
+            if (pendingSigilTransaction != null && !pendingSigilTransaction.NeedsRefund)
+            {
+                pendingSigilTransaction = null;
+            }
+        }
+
+        private bool TryRefundPendingSigilTransaction(string reason, bool announce)
+        {
+            if (pendingSigilTransaction == null || !pendingSigilTransaction.NeedsRefund)
+            {
+                return true;
+            }
+
+            if (Map == null || pendingSigilTransaction.ConsumedSigilDef == null)
+            {
+                return false;
+            }
+
+            Thing refund = ThingMaker.MakeThing(pendingSigilTransaction.ConsumedSigilDef);
+            IntVec3 origin = InteractionCell.IsValid && InteractionCell.InBounds(Map)
+                ? InteractionCell
+                : (PositionHeld.IsValid ? PositionHeld : RitualFocusCell);
+            if (!origin.IsValid || !GenPlace.TryPlaceThing(refund, origin, Map, ThingPlaceMode.Near))
+            {
+                return false;
+            }
+
+            pendingSigilTransaction.MarkRefunded(reason ?? "The pending sigil was restored after the invocation failed before activation.");
+            if (announce)
+            {
+                Messages.Message("ABY_SigilTransaction_Refunded".Translate(refund.LabelCap), MessageTypeDefOf.NeutralEvent, false);
+            }
+
+            pendingSigilTransaction = null;
+            return true;
+        }
+
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+        {
+            if (pendingSigilTransaction != null && pendingSigilTransaction.NeedsRefund)
+            {
+                TryRefundPendingSigilTransaction("Summoning circle destroyed before encounter activation.", true);
+            }
+
+            Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.AbortPreparation(this, "Summoning circle destroyed before ritual preparation could complete.");
+            base.Destroy(mode);
         }
 
         private float GetRitualIntensity()

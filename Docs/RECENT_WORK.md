@@ -1,3 +1,38 @@
+## 2026-06-23 — Summon transaction, recovery and validation consolidation
+
+- Added a save-backed sigil invocation transaction: one sigil is permanently committed only after a concrete encounter activation succeeds. Pre-activation failures, player aborts, and Circle destruction refund exactly one sigil; an unplaceable refund remains recoverable and blocks a new invocation until restored.
+- Reworked the normal carry job to hold the sigil at the Circle interaction cell through warmup. Ground staging cells are not gameplay requirements.
+- Added player-facing pre-activation abort controls to the Circle gizmos and Summoning Console.
+- Consolidated Console, Sigil Vault, manual Archon-sigil use, job start, held-sigil warmup, and diagnostic route checks through `ABY_SigilUseValidator` and `ABY_SummonPreflightReport`.
+- Expanded copied diagnostics with operator route counts and exact failure distinctions for forbidden sigils, manipulation, reachability, reservation, and shared routes.
+- Replaced reflection-based early capacitor profile mutation with explicit authored no-capacitor policy.
+- Converted summon runtime lifecycle tracking from one map record to save-backed multiple records so confirmed Dev concurrent rehearsal does not overwrite earlier test encounter diagnostics.
+- Removed duplicate EN/RU `ABY_CircleCommand_JumpToSigil` keys from legacy Keyed files; the Summoning Console redesign files are canonical.
+
+Touched files:
+source/Summoning/ABY_SigilInvocationTransaction.cs
+source/Summoning/ABY_SigilUseValidator.cs
+source/Summoning/ABY_SummonPreflightReport.cs
+source/Summoning/AbyssalCircleCapacitorRitualUtility.cs
+source/Summoning/Jobs/JobDriver_CarrySigilToAbyssalCircle.cs
+source/Summoning/MapComponents/MapComponent_ABY_SummonEncounterRuntime.cs
+source/Bosses/Shared/Comps/CompUseEffect_SummonBoss.cs
+source/Bosses/Archon/Comps/CompUsable_ArchonSigil.cs
+source/Compatibility/MapComponent_AbyssalProgressionHotfix.cs
+source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
+source/World/Buildings/Summoning/Building_ABY_SigilVault.cs
+source/UI/Summoning/AbyssalSummoningConsoleUtility.cs
+source/UI/Summoning/Window_AbyssalSummoningConsole.cs
+Languages/English/Keyed/ABY_Strings.xml
+Languages/Russian/Keyed/ABY_Strings.xml
+Docs/AI_ARCHITECTURE.md
+Docs/BUILD_AND_SOURCE_LAYOUT.md
+Docs/AI_QUICK_INDEX.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+
+
 ## 2026-06-22 — Crown Interdictor T4 melee integration
 
 - Added `ABY_CrownInterdictor`, a Tier IV Crown/Dominion priority-target melee interceptor, to the Abyssal Forge. It fills the pre-T5 melee gap between Cohort Halberd/Gatebreaker roles and the distinct T5 Breach Driver / Crown Scission Array endpoints.

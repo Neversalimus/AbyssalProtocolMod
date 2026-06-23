@@ -428,6 +428,15 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            CompProperties_UseEffectSummonBoss summonProps = droppedSigil.TryGetComp<CompUseEffect_SummonBoss>()?.Props;
+            ABY_SummonPreflightReport preflight = ABY_SummonPreflightReport.Create(circle, summonProps, carrier, droppedSigil, true, true);
+            if (!preflight.CanStart)
+            {
+                TryReabsorbOrPlace(droppedSigil);
+                failReason = preflight.PrimaryBlocker ?? "ABY_SigilInvocationFail_Preflight".Translate();
+                return false;
+            }
+
             Job job = JobMaker.MakeJob(carryJobDef, droppedSigil, circle);
             job.count = 1;
             carrier.jobs.TryTakeOrderedJob(job);
@@ -707,74 +716,7 @@ namespace AbyssalProtocol
 
         private bool TryFindOperatorForCircle(Thing sigil, Building_AbyssalSummoningCircle circle, out Pawn bestCarrier, out string failReason)
         {
-            bestCarrier = null;
-            failReason = null;
-
-            if (sigil == null || !sigil.Spawned || sigil.Map == null)
-            {
-                failReason = "ABY_SigilVault_Fail_NoStoredSigils".Translate();
-                return false;
-            }
-
-            if (circle == null || circle.Destroyed || !circle.Spawned || circle.MapHeld != sigil.MapHeld)
-            {
-                failReason = "ABY_SigilVault_Fail_LinkTargetInvalid".Translate();
-                return false;
-            }
-
-            List<Pawn> pawns = sigil.Map.mapPawns?.FreeColonistsSpawned;
-            if (pawns == null || pawns.Count == 0)
-            {
-                failReason = "ABY_SigilVault_Fail_NoOperator".Translate();
-                return false;
-            }
-
-            float bestScore = float.MaxValue;
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn pawn = pawns[i];
-                if (pawn == null || pawn.Dead || pawn.Downed || pawn.jobs == null || pawn.InMentalState)
-                {
-                    continue;
-                }
-
-                if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
-                {
-                    continue;
-                }
-
-                if (!pawn.CanReserveAndReach(sigil, PathEndMode.ClosestTouch, Danger.Deadly))
-                {
-                    continue;
-                }
-
-                if (!pawn.CanReserveAndReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
-                {
-                    continue;
-                }
-
-                float score = pawn.PositionHeld.DistanceToSquared(sigil.PositionHeld);
-                score += sigil.PositionHeld.DistanceToSquared(circle.InteractionCell) * 0.45f;
-
-                if (pawn.Drafted)
-                {
-                    score += 4000f;
-                }
-
-                if (score < bestScore)
-                {
-                    bestScore = score;
-                    bestCarrier = pawn;
-                }
-            }
-
-            if (bestCarrier != null)
-            {
-                return true;
-            }
-
-            failReason = "ABY_SigilVault_Fail_NoOperator".Translate();
-            return false;
+            return ABY_SigilUseValidator.TryFindBestOperator(circle, sigil, out bestCarrier, out failReason);
         }
 
         private bool TryFindNearestReadyCircle(out Building_AbyssalSummoningCircle bestCircle, out string failReason)

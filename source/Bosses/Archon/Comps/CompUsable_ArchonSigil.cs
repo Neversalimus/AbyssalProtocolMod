@@ -99,7 +99,7 @@ namespace AbyssalProtocol
 
             if (pawn == null)
             {
-                failReason = "No pawn available.";
+                failReason = "ABY_SigilInvocationFail_NoPawn".Translate();
                 return false;
             }
 
@@ -108,54 +108,24 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!pawn.CanReach(parent, PathEndMode.Touch, Danger.Deadly))
+            Building_AbyssalSummoningCircle preferred = preferredCircleTarget.Thing as Building_AbyssalSummoningCircle;
+            if (preferred == null && pawn.CurJob != null)
             {
-                failReason = "NoPath".Translate();
-                return false;
+                preferred = pawn.CurJob.GetTarget(TargetIndex.B).Thing as Building_AbyssalSummoningCircle;
             }
 
-            if (includeReservationChecks && !pawn.CanReserve(parent))
-            {
-                failReason = "Reserved".Translate();
-                return false;
-            }
-
-            if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
-            {
-                failReason = "Incapable".Translate();
-                return false;
-            }
-
-            circle = ResolvePreferredCircle(pawn, preferredCircleTarget);
-            if (circle == null)
-            {
-                if (!AbyssalBossSummonUtility.TryFindNearestAvailableCircle(
-                        pawn.MapHeld,
-                        pawn.PositionHeld,
-                        out circle,
-                        out failReason))
-                {
-                    return false;
-                }
-            }
-
-            if (!circle.IsReadyForSigil(out failReason))
+            if (!ABY_SigilUseValidator.TryBuildContext(
+                    pawn,
+                    parent,
+                    preferred,
+                    includeReservationChecks,
+                    out ABY_SigilUseValidator.SigilUseContext context,
+                    out failReason))
             {
                 return false;
             }
 
-            if (!pawn.CanReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
-            {
-                failReason = "NoPath".Translate();
-                return false;
-            }
-
-            if (includeReservationChecks && !pawn.CanReserve(circle))
-            {
-                failReason = "Reserved".Translate();
-                return false;
-            }
-
+            circle = context.Circle;
             return true;
         }
 
@@ -175,33 +145,6 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private Building_AbyssalSummoningCircle ResolvePreferredCircle(Pawn pawn, LocalTargetInfo preferredCircleTarget)
-        {
-            Building_AbyssalSummoningCircle circle = preferredCircleTarget.Thing as Building_AbyssalSummoningCircle;
-            if (IsValidCircleForPawn(pawn, circle))
-            {
-                return circle;
-            }
 
-            if (pawn?.CurJob != null)
-            {
-                circle = pawn.CurJob.GetTarget(TargetIndex.B).Thing as Building_AbyssalSummoningCircle;
-                if (IsValidCircleForPawn(pawn, circle))
-                {
-                    return circle;
-                }
-            }
-
-            return null;
-        }
-
-        private bool IsValidCircleForPawn(Pawn pawn, Building_AbyssalSummoningCircle circle)
-        {
-            return circle != null
-                && !circle.Destroyed
-                && circle.Spawned
-                && circle.MapHeld == pawn?.MapHeld
-                && circle.IsReadyForSigil(out _);
-        }
     }
 }

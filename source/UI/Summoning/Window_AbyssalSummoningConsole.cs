@@ -735,16 +735,26 @@ namespace AbyssalProtocol
             }
 
             bool dominionAbortMode = AbyssalSummoningConsoleUtility.IsDominionRitual(ritual) && dominionCrisis != null && dominionCrisis.IsActive;
+            bool invocationAbortMode = !dominionAbortMode && circle.HasAbortablePendingInvocation;
             string invokeLabel = dominionAbortMode
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCrisisAbortCommand", "Abort dominion staging")
-                : circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
-                    ? "ABY_CapacitorCommand_ForceInvoke".Translate()
-                    : AbyssalSummoningConsoleUtility.GetAssignSigilLabel();
-            bool invokeEnabled = dominionAbortMode || !circle.RitualActive;
+                : invocationAbortMode
+                    ? "ABY_CircleAbortPendingInvocation".Translate()
+                    : circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
+                        ? "ABY_CapacitorCommand_ForceInvoke".Translate()
+                        : AbyssalSummoningConsoleUtility.GetAssignSigilLabel();
+            bool invokeEnabled = dominionAbortMode || invocationAbortMode || !circle.RitualActive;
             Rect invokeRect = new Rect(rect.x, rect.y + 70f, rect.width, 34f);
             if (AbyssalStyledWidgets.TextButton(invokeRect, invokeLabel, invokeEnabled, true))
             {
-                ConfirmAndAssign(ritual);
+                if (invocationAbortMode)
+                {
+                    ConfirmAndAbortPendingInvocation();
+                }
+                else
+                {
+                    ConfirmAndAssign(ritual);
+                }
             }
         }
 
@@ -922,15 +932,25 @@ namespace AbyssalProtocol
             }
 
             bool dominionAbortMode = AbyssalSummoningConsoleUtility.IsDominionRitual(ritual) && dominionCrisis != null && dominionCrisis.IsActive;
+            bool invocationAbortMode = !dominionAbortMode && circle.HasAbortablePendingInvocation;
             string invokeLabel = dominionAbortMode
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCrisisAbortCommand", "Abort dominion staging")
-                : circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
-                    ? "ABY_CapacitorCommand_ForceInvoke".Translate()
-                    : AbyssalSummoningConsoleUtility.GetAssignSigilLabel();
-            bool invokeEnabled = dominionAbortMode || !circle.RitualActive;
+                : invocationAbortMode
+                    ? "ABY_CircleAbortPendingInvocation".Translate()
+                    : circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
+                        ? "ABY_CapacitorCommand_ForceInvoke".Translate()
+                        : AbyssalSummoningConsoleUtility.GetAssignSigilLabel();
+            bool invokeEnabled = dominionAbortMode || invocationAbortMode || !circle.RitualActive;
             if (AbyssalStyledWidgets.TextButton(invokeRect, invokeLabel, invokeEnabled, true))
             {
-                ConfirmAndAssign(ritual);
+                if (invocationAbortMode)
+                {
+                    ConfirmAndAbortPendingInvocation();
+                }
+                else
+                {
+                    ConfirmAndAssign(ritual);
+                }
             }
         }
 
@@ -1779,6 +1799,24 @@ namespace AbyssalProtocol
             {
                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
             }
+        }
+
+        private void ConfirmAndAbortPendingInvocation()
+        {
+            Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                "ABY_CircleAbortPendingInvocationConfirm".Translate(),
+                delegate
+                {
+                    if (circle.TryAbortPendingInvocation(out string failReason))
+                    {
+                        Messages.Message("ABY_CircleAbortCompleted".Translate(), MessageTypeDefOf.NeutralEvent, false);
+                        SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
+                    }
+                    else if (!failReason.NullOrEmpty())
+                    {
+                        Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                    }
+                }));
         }
 
         private void ConfirmAndAssign(AbyssalSummoningConsoleUtility.RitualDefinition ritual)

@@ -568,3 +568,14 @@ Lifecycle contract:
 Player-support route: the ritual dossier's **Copy diagnostic report** action uses `AbyssalSummoningConsoleUtility.BuildSummonDiagnosticReport(...)`. Keep diagnostic export descriptive and non-mutating; it should remain safe to click repeatedly during an encounter.
 
 Dev route: `ABY_SummonThreatRehearsalUtility` contains the non-mutating preflight reliability pass. It validates that every active ritual produces a coherent report and logs the exact current blockers. Its threat-rehearsal output is mode-aware: dynamic portal/pack/horde/Dominion payloads report their actual planner route instead of treating XML PawnKind placeholders as boss identities, and fallback directed plans must be labeled as fallback compositions. It is not a player-facing progression feature.
+
+### Summon transactions, recovery and concurrent Dev records
+
+Normal sigil invocation is a **transaction**, not a one-way item delete. `source/Summoning/ABY_SigilInvocationTransaction.cs` is owned by `Building_AbyssalSummoningCircle`: after the circle accepts ritual preparation, `CompUseEffect_SummonBoss` consumes one sigil and registers the transaction. The sigil is committed permanently only after `MarkEncounterActivated()` accepts a concrete portal, manifestation, boss, horde, or Dominion start. A pre-activation failure, player abort, or circle destruction refunds exactly one sigil; a failed physical refund remains save-backed and blocks a new invocation until it can be placed safely.
+
+The normal carrier path is `JobDriver_CarrySigilToAbyssalCircle`: carry to the interaction cell, hold throughout warmup, activate. It must route all readiness checks through `ABY_SigilUseValidator` and `ABY_SummonPreflightReport`; do not reintroduce independent ground staging rules.
+
+`MapComponent_ABY_SummonEncounterRuntime` stores a list of lifecycle records. Normal player paths still permit only one active encounter, while confirmed Dev rehearsal can create multiple independent records for concurrent test encounters. Do not collapse this back to a single map record.
+
+Early ritual capacitor policy is explicit in `AbyssalCircleCapacitorRitualUtility.NoCapacitorRequirementRitualIds`. Do not mutate private capacitor profile fields through reflection from a map component.
+

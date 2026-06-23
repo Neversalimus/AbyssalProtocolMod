@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -109,6 +110,15 @@ namespace AbyssalProtocol
             MaxRiskReduction = 0.15f
         };
 
+        // Early rituals deliberately do not require a capacitor lattice.  This is an explicit
+        // authored policy, not a runtime reflection mutation performed by a compatibility map component.
+        private static readonly HashSet<string> NoCapacitorRequirementRitualIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "unstable_breach",
+            "ember_hunt",
+            "archon_beast"
+        };
+
         private static string TranslateOrFallback(string key, string fallback)
         {
             string value = key.Translate();
@@ -143,9 +153,14 @@ namespace AbyssalProtocol
             return summonProps == null ? null : GetProfile(summonProps.ritualId);
         }
 
+        public static bool RequiresCapacitorProfile(string ritualId)
+        {
+            return !ritualId.NullOrEmpty() && !NoCapacitorRequirementRitualIds.Contains(ritualId);
+        }
+
         public static RitualProfile GetProfile(string ritualId)
         {
-            if (ritualId.NullOrEmpty())
+            if (ritualId.NullOrEmpty() || !RequiresCapacitorProfile(ritualId))
             {
                 return null;
             }
