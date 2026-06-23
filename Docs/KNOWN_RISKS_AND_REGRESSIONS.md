@@ -1,27 +1,3 @@
-## 2026-06-22 — Crown Interdictor target-lock weapon rules
-
-- Crown Interdictor writ state belongs on the equipped weapon `ThingComp` and must remain save-safe. Do not move mark target IDs, mark ticks, or per-hit duplicate guards into a static pawn/map dictionary.
-- The two-hit sequence is pawn-only, target-specific, and local. It must reset on target change, expiry, invalid/dead/downed targets, or backward game ticks after load; never add map-wide target scans to make it “smarter.”
-- `ABY_CrownAuthorityScar` is deliberately shared between all Interdictors to prevent squad-based permanent lock loops. Do not bypass the scar for normal, miniboss, or boss targets without an explicit balance pass.
-- Boss/miniboss classification must use `ABY_AbyssalPawnClassificationUtility.IsBossOrMiniBoss(...)`. Protected targets receive only `ABY_CrownInterdicted_Boss`; they must not be hard-stunned or have custom boss encounter logic mutated.
-- If lock values change, keep XML duration values, Hediff duration components, InfoCard strings, boss-safe wording, and Melee Animation data synchronized. Recheck offsets after any texture crop, draw-size, or rotation change.
-
-## 2026-06-22 — Crown Scission Array echo weapon rules
-
-- Crown Scission Array Echo charge state belongs on the equipped weapon `ThingComp` and must remain save-safe. Do not move charges, kill tracking or expiry into a static pawn/map dictionary.
-- Echo charges are created only after a direct hostile pawn kill from the array's base melee hit. The zero-damage trigger worker may observe a dead primary victim after RimWorld resolves the normal tool damage; do not let echo damage create charges, recurse, or chain.
-- Secondary targeting must stay bounded to `GenRadial` cells around the struck target. Do not replace the local lookup with `mapPawns.AllPawnsSpawned`, LINQ pipelines, a map-wide search, or an area damage pass.
-- An echo may damage only one other living hostile pawn. It must exclude the wielder, the struck target, buildings, corpses, downed pawns and allied/neutral pawns. Keep the current safe Abyssal hostility helper for generated-faction compatibility.
-- If the mechanic changes, keep XML, InfoCard strings, max charges, expiry, radius, echo damage and armor penetration synchronized. Melee Animation tweak data is required and must be rechecked after texture crop, draw-size or rotation changes.
-
-## 2026-06-22 — Stateful melee verdict weapon rules
-
-- Dominion Breach Driver pressure state belongs on the equipped weapon `ThingComp` and must be saved with the weapon. Do not move its target lock into an unbounded static dictionary keyed by pawn, map or Thing IDs.
-- The verdict sequence is intentionally single-target and pawn-only. Do not add building, corpse, multi-target, area or map-wide scan logic merely to make the weapon look stronger; Gatebreaker Maul already owns the anti-structure role.
-- The third-hit verdict must use `target.TakeDamage(...)` with the current target and current weapon context so custom boss health, true-death behavior and downstream damage hooks can process the hit. Do not mutate custom boss HP directly.
-- If the mechanic changes, keep the player-facing InfoCard entries synchronized with XML values for hit count, timing, damage and armor penetration.
-- Melee Animation data is required for every new melee ThingDef. Recheck the Tweak Editor offsets after any texture crop, draw-size or rotation change.
-
 ## 2026-05-24 — Combat projectile and support aura hot-path rules
 
 - Do not use LINQ `Where`/`Select`/`OrderBy` target pipelines inside projectile impact paths or turret shot resolution. Use bounded manual top-N selection so combat spikes do not allocate iterator/sort state during large raids.
@@ -32,14 +8,8 @@
 ## 2026-05-23 — Summon threat rehearsal dev-gizmo guard
 
 - `DEV: threat rehearsal` is diagnostics-only. Keep it behind `Prefs.DevMode`; it can force-start rituals without consuming sigils and bypasses progression/capacitor gates for testing.
-- When a concrete or runtime Abyssal encounter is already active, the force-start menu must require an explicit confirmation before bypassing the map-wide encounter lock. This is the only allowed concurrent-summon route.
-- The concurrent rehearsal bypass must never be reachable from sigil use, jobs, normal gizmos, or the player Summoning Console. It may not bypass the selected circle's own busy, power, interaction-cell, or ritual-focus checks.
-- Portal-wave and Dominion map components remain single-instance systems. Do not extend the rehearsal bypass into duplicate horde waves or simultaneous Dominion crises without a dedicated multi-instance runtime design.
 - Do not expose the force-start path through the player Summoning Console or normal gizmos. A future player-facing forecast should be read-only and localized, not a dev force-start command.
 - Rehearsal logs are predictions based on current map state; horde portal cells and Dominion wave details are still runtime-selected by their map components and should not be treated as exact deterministic spawn promises.
-- Dynamic `ImpPortal`, `HostilePack`, PortalWave, and Dominion routes must not use placeholder XML PawnKind values to infer a boss profile in diagnostics. Keep their payload labels mode-aware and let the actual T1/horde/Dominion plan be authoritative.
-- Empty template/doctrine fields in a directed plan mean a fallback composition was selected. Report that explicitly rather than emitting blank values that look like a broken plan.
-- Keep progression unlock results separate from subsystem-only map-runtime readiness. Dominion `CanBegin` does not replace the ritual unlock gate.
 
 ## 2026-05-23 — Sigil routing and close-escort regression guards
 
@@ -277,6 +247,12 @@ Actual code and assets win over this document.
 | Weapon UI icon collapses into a tiny silhouette | P2 | weapon XML/assets | Equipped weapon gizmos, inventory icons, or vanilla info-card headers show a barely visible gun/blade, especially for long thin textures | For each weapon ThingDef, set an explicit `uiIconScale` and keep the final runtime PNG tightly bounded with true alpha padding. Do not rely on large transparent canvases for weapon icons. |
 | Weapon ground sprite is stretched or flattened | P2 | weapon XML/assets | Dropped weapons look unnaturally long, paper-thin, or distorted compared with the source sprite | Keep the runtime PNG canvas aspect and `graphicData.drawSize` aspect aligned. After trimming or re-padding a weapon texture, recalibrate `drawSize`; avoid changing draw-size-sensitive custom VFX weapons without retuning their VFX offsets. |
 | Re-padding weapon PNGs breaks custom VFX alignment | P1/P2 | weapon VFX/assets | Muzzle flashes, beams, charge dots, or custom-drawn sequences no longer line up with the barrel/rail | Before changing texture bounds or `drawSize`, search for weapon-specific VFX utilities and risk notes. `ABY_CrownReactorMultilance` is draw-size sensitive; keep its draw size stable unless retuning `Thing_CrownReactorBeamSequence`. |
+
+## Item classification / storage / repair compatibility risks
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| External containers or repair structures inspect only direct item categories | P1 | Weapon/apparel ThingDefs | Abyssal armor and weapons are missing from category filters or ignored by item-repair utilities despite inheriting standard base parents | Keep the explicit `Weapons` / `Apparel` pass in `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml`. Test a damaged player-facing weapon and apparel item in vanilla stockpiles plus representative storage/repair integrations. Do not change `techLevel`, tradeability, or enemy-only drop policy merely to force compatibility. |
 
 ## Apparel / pawn graphics risks
 
@@ -998,10 +974,3 @@ In-game checks:
 - Clear a horde after all portals/gate/pawns are gone; confirm the horde watchdog and runtime lifecycle remove the blocker without a time-based player exploit.
 - Open the ritual dossier during an active encounter, copy the report repeatedly, and confirm no sigil/capacitor/arrival state changes.
 - Run `DEV: threat rehearsal` → `Run preflight reliability pass` and confirm every active ritual reports `PASS` coherence, whether its current gameplay gates are actually ready or intentionally blocked.
-
-| Sigil consumed before a real encounter manifests | P1 | normal summon lifecycle | expensive sigil disappears after late portal/manifestation/boss failure, player abort, power interruption, or Circle destruction | Keep `ABY_SigilInvocationTransaction` save-backed. Commit only from `MarkEncounterActivated`; pre-activation reset must refund exactly one sigil and block new invocation until a deferred refund can be placed. |
-| Held-sigil warmup ends without a clear reason | P2 | sigil job / console | pawn drops or loses sigil, loses power, leaves interaction cell, or cannot reserve route; player sees a silent cancellation | Route job-time validation through `ABY_SigilUseValidator`, report one precise localized failure, end priming visuals, and safely release the held sigil. |
-| Duplicate Keyed localization entries | P1 | EN/RU Keyed XML | load-order-dependent text or lost translations | Run duplicate-key validation across each language Keyed folder. Keep `ABY_CircleCommand_JumpToSigil` canonical in SummoningConsoleRedesign strings. |
-| Dev concurrent encounter overwrites lifecycle diagnostics | P3 | summon runtime / Dev rehearsal | second Dev encounter hides first lifecycle state | Store a list of encounter records; normal player route remains one-at-a-time. |
-| Reflection mutation of capacitor profile state | P2 | progression compatibility | private-name refactor silently changes early ritual requirements | Keep early exemptions as explicit `NoCapacitorRequirementRitualIds` policy in the capacitor utility; no reflection mutation from map components. |
-

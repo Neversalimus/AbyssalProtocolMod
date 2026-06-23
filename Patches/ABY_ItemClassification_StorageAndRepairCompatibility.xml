@@ -1,0 +1,1217 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!--
+    Item classification compatibility pass.
+    External storage frameworks and repair utilities can inspect a ThingDef's direct
+    thingCategories list instead of relying on inherited parent categories.  Make every
+    Abyssal weapon/apparel definition explicitly advertise its vanilla item category.
+    This intentionally does not alter techLevel, tradeability, destroyOnDrop, repair
+    behavior, or enemy-only drop policy.
+  -->
+
+  <!-- Weapons -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AnchorSpiker"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AnchorSpiker"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AnchorSpiker"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AnchorSpiker"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AshChoirLauncher"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AshChoirLauncher"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AshChoirLauncher"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshChoirLauncher"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AshenPike"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenPike"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AshenPike"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenPike"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AshenScattergun"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenScattergun"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AshenScattergun"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenScattergun"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_BreachCannon"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_BreachCannon"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_BreachCannon"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_BreachCannon"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_BreachSpikeProjector"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_BreachSpikeProjector"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_BreachSpikeProjector"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_BreachSpikeProjector"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CanticleDriver"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CanticleDriver"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CanticleDriver"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CanticleDriver"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CohortHalberd"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CohortHalberd"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CohortHalberd"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CohortHalberd"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownReactorMultilance"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownReactorMultilance"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownReactorMultilance"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownReactorMultilance"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownshardStormcaster"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownshardStormcaster"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownshardStormcaster"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownshardStormcaster"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownspikeRail"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownspikeRail"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownspikeRail"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownspikeRail"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_EdictLance"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_EdictLance"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_EdictLance"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_EdictLance"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_GatebreakerMaul"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerMaul"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_GatebreakerMaul"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerMaul"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_GatebreakerSpiker"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerSpiker"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_GatebreakerSpiker"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerSpiker"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_HexPistol"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_HexPistol"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_HexPistol"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_HexPistol"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_Hexgun"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_Hexgun"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_Hexgun"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_Hexgun"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_LitanyGrinder"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_LitanyGrinder"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_LitanyGrinder"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_LitanyGrinder"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_NullCantor"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_NullCantor"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullCantor"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullCantor"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_NullDisruptor"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_NullDisruptor"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullDisruptor"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullDisruptor"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_NullMarksmanRifle"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_NullMarksmanRifle"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullMarksmanRifle"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullMarksmanRifle"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_NullbrandGlaive"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_NullbrandGlaive"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullbrandGlaive"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullbrandGlaive"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_OblivionChoir"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_OblivionChoir"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_OblivionChoir"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_OblivionChoir"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_PhalanxDriver"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_PhalanxDriver"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_PhalanxDriver"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_PhalanxDriver"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_ReactorChoirMinigun"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_ReactorChoirMinigun"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_ReactorChoirMinigun"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_ReactorChoirMinigun"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftCarbine"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftCarbine"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftCarbine"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftCarbine"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftDagger"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftDagger"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftDagger"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftDagger"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftNeedler"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftNeedler"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftNeedler"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftNeedler"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_SigilRepeater"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_SigilRepeater"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_SigilRepeater"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_SigilRepeater"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_SpecterLashProjector"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_SpecterLashProjector"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_SpecterLashProjector"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_SpecterLashProjector"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_UltraPlasmaRifle"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_UltraPlasmaRifle"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_UltraPlasmaRifle"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_UltraPlasmaRifle"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_VesperLance"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_VesperLance"]/thingCategories/li[text()="Weapons"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_VesperLance"]/thingCategories</xpath>
+        <value>
+          <li>Weapons</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_VesperLance"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Weapons</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <!-- Apparel / armor / accessories -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplateHelmPrototype"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplateHelmPrototype"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplateHelmPrototype"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplateHelmPrototype"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplatePrototype"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplatePrototype"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplatePrototype"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplatePrototype"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AshboundFieldPack"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AshboundFieldPack"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AshboundFieldPack"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshboundFieldPack"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AshboundTreadBoots"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AshboundTreadBoots"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AshboundTreadBoots"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshboundTreadBoots"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AshenGripGloves"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenGripGloves"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AshenGripGloves"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenGripGloves"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AshenVambraces"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenVambraces"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AshenVambraces"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenVambraces"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownAuthorityVambraces"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownAuthorityVambraces"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownAuthorityVambraces"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownAuthorityVambraces"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownConduitPack"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownConduitPack"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownConduitPack"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownConduitPack"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownOfRupture"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownOfRupture"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownOfRupture"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownOfRupture"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownedCoreHelm"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownedCoreHelm"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownedCoreHelm"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownedCoreHelm"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownpathSabatons"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownpathSabatons"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownpathSabatons"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownpathSabatons"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_CrownsealGauntlets"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownsealGauntlets"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownsealGauntlets"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownsealGauntlets"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_GatebreakerAnchorHarness"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerAnchorHarness"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_GatebreakerAnchorHarness"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerAnchorHarness"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_GatebreakerCarapace"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerCarapace"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_GatebreakerCarapace"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerCarapace"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_GatebreakerHelm"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerHelm"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_GatebreakerHelm"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_GatebreakerHelm"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_InfernalCombatFrame"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_InfernalCombatFrame"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_InfernalCombatFrame"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_InfernalCombatFrame"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteCowl"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteCowl"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteCowl"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteCowl"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteVestment"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteVestment"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteVestment"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteVestment"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_NullCantorFocusSling"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_NullCantorFocusSling"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullCantorFocusSling"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullCantorFocusSling"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_NullProcessionVeil"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_NullProcessionVeil"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullProcessionVeil"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullProcessionVeil"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftConduitGloves"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftConduitGloves"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftConduitGloves"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftConduitGloves"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftHelm"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftHelm"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftHelm"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftHelm"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftRelayPack"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftRelayPack"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftRelayPack"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftRelayPack"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftVectorVambraces"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftVectorVambraces"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftVectorVambraces"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftVectorVambraces"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_RiftstepGreaves"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftstepGreaves"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftstepGreaves"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftstepGreaves"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_VesperHaloHelm"]/thingCategories</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_VesperHaloHelm"]/thingCategories/li[text()="Apparel"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_VesperHaloHelm"]/thingCategories</xpath>
+        <value>
+          <li>Apparel</li>
+        </value>
+      </nomatch>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_VesperHaloHelm"]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+  </Operation>
+
+</Patch>
