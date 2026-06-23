@@ -2,15 +2,18 @@
 <Patch>
 
   <!--
-    Item classification compatibility pass.
-    External storage frameworks and repair utilities can inspect a ThingDef's direct
-    thingCategories list instead of relying on inherited parent categories.  Make every
-    Abyssal weapon/apparel definition explicitly advertise its vanilla item category.
-    This intentionally does not alter techLevel, tradeability, destroyOnDrop, repair
-    behavior, or enemy-only drop policy.
+    Direct item-category compatibility pass.
+
+    Many storage containers and repair utilities inspect a ThingDef's direct
+    thingCategories list rather than fully resolving parent inheritance.
+    The current archive has 32 concrete weapon ThingDefs and 28 concrete wearable
+    ThingDefs; every one receives its vanilla category here.
+
+    This does not change techLevel, quality behavior, tradeability, destroyOnDrop,
+    repair mechanics, or enemy-only loot policy.
   -->
 
-  <!-- Weapons -->
+  <!-- Weapons: 32 / 32 current archive weapon ThingDefs -->
   <Operation Class="PatchOperationConditional">
     <xpath>/Defs/ThingDef[defName="ABY_AnchorSpiker"]/thingCategories</xpath>
     <match Class="PatchOperationConditional">
@@ -652,7 +655,7 @@
     </nomatch>
   </Operation>
 
-  <!-- Apparel / armor / accessories -->
+  <!-- Apparel: 28 / 28 current archive wearable ThingDefs -->
   <Operation Class="PatchOperationConditional">
     <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplateHelmPrototype"]/thingCategories</xpath>
     <match Class="PatchOperationConditional">

@@ -1,9 +1,17 @@
-## 2026-06-23 — Item classification storage and repair compatibility
+## 2026-06-23 — Complete direct gear classification for storage and repair compatibility
 
-- Added `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml`, which explicitly assigns vanilla `Weapons` or `Apparel` categories to every Abyssal weapon and apparel `ThingDef`.
-- This is a metadata compatibility pass for storage frameworks and repair utilities that inspect direct `thingCategories` instead of inherited base-parent categories.
-- The pass intentionally leaves `techLevel`, tradeability, `destroyOnDrop`, quality behavior, and enemy-only item policy unchanged.
-- No C# source or assembly changed; XML validation and direct category coverage checks are required before release.
+- Added `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml` to classify every concrete gear ThingDef in the supplied archive directly, not only through parent inheritance.
+- Coverage is exact for this archive: `32/32` weapon ThingDefs advertise `Weapons`; `28/28` wearable ThingDefs advertise `Apparel`.
+- The patch is conditional and will not duplicate categories that another mod has already added.
+- Preserved `techLevel`, tradeability, `destroyOnDrop`, quality behavior, and enemy-only loot policy; this is a storage/repair metadata fix only.
+- XML validation and target-coverage verification passed. RimWorld runtime testing with storage containers and the Odyssey Archo Column is still required.
+
+Touched files:
+Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml
+Docs/AI_QUICK_INDEX.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
 
 ## 2026-05-24 — Combat targeting and Dominion lookup cleanup
 

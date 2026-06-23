@@ -247,12 +247,7 @@ Actual code and assets win over this document.
 | Weapon UI icon collapses into a tiny silhouette | P2 | weapon XML/assets | Equipped weapon gizmos, inventory icons, or vanilla info-card headers show a barely visible gun/blade, especially for long thin textures | For each weapon ThingDef, set an explicit `uiIconScale` and keep the final runtime PNG tightly bounded with true alpha padding. Do not rely on large transparent canvases for weapon icons. |
 | Weapon ground sprite is stretched or flattened | P2 | weapon XML/assets | Dropped weapons look unnaturally long, paper-thin, or distorted compared with the source sprite | Keep the runtime PNG canvas aspect and `graphicData.drawSize` aspect aligned. After trimming or re-padding a weapon texture, recalibrate `drawSize`; avoid changing draw-size-sensitive custom VFX weapons without retuning their VFX offsets. |
 | Re-padding weapon PNGs breaks custom VFX alignment | P1/P2 | weapon VFX/assets | Muzzle flashes, beams, charge dots, or custom-drawn sequences no longer line up with the barrel/rail | Before changing texture bounds or `drawSize`, search for weapon-specific VFX utilities and risk notes. `ABY_CrownReactorMultilance` is draw-size sensitive; keep its draw size stable unless retuning `Thing_CrownReactorBeamSequence`. |
-
-## Item classification / storage / repair compatibility risks
-
-| Risk | Severity | Area | Symptoms | Prevention / check |
-| --- | --- | --- | --- | --- |
-| External containers or repair structures inspect only direct item categories | P1 | Weapon/apparel ThingDefs | Abyssal armor and weapons are missing from category filters or ignored by item-repair utilities despite inheriting standard base parents | Keep the explicit `Weapons` / `Apparel` pass in `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml`. Test a damaged player-facing weapon and apparel item in vanilla stockpiles plus representative storage/repair integrations. Do not change `techLevel`, tradeability, or enemy-only drop policy merely to force compatibility. |
+| Storage container or repair utility cannot classify Abyssal gear | P1 | external storage/repair compatibility | Weapons or armor are absent from filters despite normal parent inheritance | Keep `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml` current: every concrete weapon needs `Weapons`, every concrete wearable needs `Apparel`. Re-run exact coverage against current ThingDefs; do not change tech level, tradeability, quality behavior, or enemy-only flags merely to satisfy a filter. |
 
 ## Apparel / pawn graphics risks
 

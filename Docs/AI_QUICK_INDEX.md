@@ -50,7 +50,7 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | Pawn AI, hostile behavior, pathing, anti-tame/animal workflow | `source/Pawns/`, `source/Patches/` | `source/Comps/`, `Defs/PawnKindDefs/`, `Defs/ThingDefs/` |
 | Pawn death drops / true death / no downed state | `source/Pawns/DeathActions/`, `source/Bosses/Shared/` | `Defs/ThingDefs/`, `Defs/PawnKindDefs/`, `source/UI/BossBar/` |
 | Apparel, armor Aegis, hover armor, body type restrictions | `source/Apparel/` | `source/Defs/Apparel/`, `Defs/ThingDefs/`, `Textures/Things/Apparel/`, `Languages/` |
-| Storage container / item repair classification compatibility | `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml` | weapon/apparel `ThingDef`s in `Defs/ThingDefs/`; test direct `Weapons` / `Apparel` categories before altering tech level or enemy-only flags |
+| Storage container filters or external repair utilities do not see Abyssal weapons/apparel | `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml` | Direct `thingCategories` on the exact `Defs/ThingDefs/` targets; verify current coverage before adding new gear |
 | Implants, hediff comps, implant info cards | `source/Hediffs/` | `Defs/HediffDefs/`, `source/UI/Forge/`, `Languages/` |
 | Harmony patch issues | `source/Patches/`, feature-specific module | `source/Core/Bootstrap/`, latest build output |
 | Safe runtime letters / notification robustness | `source/Core/Misc/ABY_LetterUtility.cs` | runtime callers in `source/Dominion/`, `source/Summoning/`, `source/Progression/`, `source/Forge/`, boss progression components |
