@@ -50,7 +50,7 @@ namespace AbyssalProtocol
             validateStart.initAction = () =>
             {
                 Pawn actor = validateStart.actor;
-                if (!TryValidateInvocation(actor, false, out string failReason))
+                if (!TryValidateInvocation(actor, false, false, out string failReason))
                 {
                     FailInvocation(actor, failReason);
                 }
@@ -65,7 +65,10 @@ namespace AbyssalProtocol
             validateHeldSigil.initAction = () =>
             {
                 Pawn actor = validateHeldSigil.actor;
-                if (!TryValidateInvocation(actor, true, out string failReason))
+                // The carrier has not moved to the circle yet. Validate ownership and
+                // route readiness here, but reserve the exact interaction-cell invariant
+                // for the priming phase after the GotoThing toil has completed.
+                if (!TryValidateInvocation(actor, true, false, out string failReason))
                 {
                     FailInvocation(actor, failReason);
                 }
@@ -80,7 +83,7 @@ namespace AbyssalProtocol
             {
                 Pawn actor = beginPriming.actor;
                 Building_AbyssalSummoningCircle circle = Circle;
-                if (!TryValidateInvocation(actor, true, out string failReason))
+                if (!TryValidateInvocation(actor, true, true, out string failReason))
                 {
                     FailInvocation(actor, failReason);
                     return;
@@ -103,7 +106,7 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                if (actor.IsHashIntervalTick(10) && !TryValidateInvocation(actor, true, out string failReason))
+                if (actor.IsHashIntervalTick(10) && !TryValidateInvocation(actor, true, true, out string failReason))
                 {
                     FailInvocation(actor, failReason);
                     return;
@@ -131,7 +134,7 @@ namespace AbyssalProtocol
             invoke.initAction = () =>
             {
                 Pawn actor = invoke.actor;
-                if (!TryValidateInvocation(actor, true, out string failReason))
+                if (!TryValidateInvocation(actor, true, true, out string failReason))
                 {
                     FailInvocation(actor, failReason);
                     return;
@@ -151,7 +154,7 @@ namespace AbyssalProtocol
             yield return invoke;
         }
 
-        private bool TryValidateInvocation(Pawn actor, bool requireHeldSigil, out string failReason)
+        private bool TryValidateInvocation(Pawn actor, bool requireHeldSigil, bool requireInteractionCell, out string failReason)
         {
             failReason = null;
             if (actor == null || actor.Destroyed || actor.Dead || actor.MapHeld == null)
@@ -180,7 +183,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (requireHeldSigil && actor.PositionHeld != circle.InteractionCell)
+            if (requireInteractionCell && actor.PositionHeld != circle.InteractionCell)
             {
                 failReason = "ABY_SigilInvocationFail_LeftInteractionCell".Translate();
                 return false;

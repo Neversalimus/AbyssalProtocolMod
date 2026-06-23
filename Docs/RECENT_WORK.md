@@ -1,3 +1,17 @@
+## 2026-06-23 — Held-sigil interaction-cell ordering fix
+
+- Fixed normal sigil invocation failing immediately with “The ritual operator left the Summoning Circle interaction cell before activation.”
+- The carrier route now separates post-pickup ownership validation from priming-position validation: the pawn may carry the sigil while walking to the Circle, and the exact interaction-cell requirement begins only after `GotoThing(..., PathEndMode.InteractionCell)` completes.
+- Priming, warmup, and final activation still require the operator to remain at the actual interaction cell while holding the sigil.
+
+
+## 2026-06-23 — Forge classification and complete storage coverage
+
+- Forge weapon subfilters now classify recipes from their produced `ThingDef`: ranged status comes from `IsRangedWeapon`; non-ranged products with melee tools are Melee. Name/description heuristics remain fallback-only.
+- Fixed `Dominion Breach Driver` and `Crown Scission Array` appearing under Ranged despite being melee weapons.
+- `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml` now covers all current direct gear definitions: 35 weapon ThingDefs and 28 wearable apparel ThingDefs, including Crown Interdictor, Dominion Breach Driver, and Crown Scission Array.
+- Do not change `techLevel`, `tradeability`, `quality`, or `destroyOnDrop` merely to improve container classification.
+
 ## 2026-06-23 — Forge weapon subfilter authority fix
 
 - Fixed the Forge Console weapon subfilter classifier so it reads the produced `ThingDef` before relying on display-name and description keywords.

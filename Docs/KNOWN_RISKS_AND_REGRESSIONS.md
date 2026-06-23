@@ -218,6 +218,11 @@ Actual code and assets win over this document.
 | New abyssal enemy missing sintering value | P2 | Forge/recipes/XML ownership | corpse cannot be processed for residue even though enemy is intended as a normal abyssal unit | Add `AbyssalProtocol.ABY_ResidueSinteringExtension` to the new non-boss `PawnKindDef`; do not expand the legacy C# fallback table unless maintaining old saves/old XML. |
 | Dev gizmo text missing/localization key shown | P2 | UI/localization | `ABY_*` key displayed | Add translation keys and test visible labels. |
 
+## 2026-06-23 — Held-sigil movement ordering regression guard
+
+- `JobDriver_CarrySigilToAbyssalCircle` must not require `actor.PositionHeld == circle.InteractionCell` immediately after `StartCarryThing`; at that point the carrier has not yet executed the `GotoThing(..., PathEndMode.InteractionCell)` toil.
+- Split validation into acquisition/route checks before movement and held-sigil + exact-cell checks only for priming, warmup, and activation. Requiring the interaction cell before the movement toil creates a 100% reproducible ritual failure.
+
 ## Summoning / sigil risks
 
 | Risk | Severity | Area | Symptoms | Prevention / check |
@@ -970,3 +975,9 @@ In-game checks:
 - Clear a horde after all portals/gate/pawns are gone; confirm the horde watchdog and runtime lifecycle remove the blocker without a time-based player exploit.
 - Open the ritual dossier during an active encounter, copy the report repeatedly, and confirm no sigil/capacitor/arrival state changes.
 - Run `DEV: threat rehearsal` → `Run preflight reliability pass` and confirm every active ritual reports `PASS` coherence, whether its current gameplay gates are actually ready or intentionally blocked.
+
+
+### Forge filter regression guard
+
+- Forge weapon subfilters must classify product metadata before display text. Any non-ranged product with one or more melee tools must appear under **Melee**, even where its label does not include legacy words such as blade, dagger, maul, or glaive.
+- Storage/repair integrations must see direct `Weapons` on all 35 current weapon ThingDefs and direct `Apparel` on all 28 wearable ThingDefs.
